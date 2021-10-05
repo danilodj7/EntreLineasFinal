@@ -1,14 +1,17 @@
 //* Creacion del layout landing page "pagina principal"
 import Footer from 'components/Footer'
 import NavBar from 'components/Navbar'
-import React, { children } from 'react'
+import React from 'react'
 
 const PublicLayout = ({children}) => { 
     return (
-        <div className="flex flex-col">
-            <NavBar/>
-            <main>{children}</main>
-            <Footer/>
+        //* display flex, displey de columna , justify between que quede el nav arriba y el footer abajo 
+        //* h-screen quede 100%, h-full tamaño completo 100%, overflow-y-scroll para que quede un scroll en el main dentro
+
+        <div className="flex flex-col justify-between h-screen"> 
+            <NavBar />
+            <main className='h-full overflow-y-scroll bg-blue-700'>{children}</main>
+            <Footer  />
         </div>
     )
 }
