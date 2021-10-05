@@ -1,0 +1,12 @@
+//* Creacion del layout landing page "pagina principal"
+import React from 'react'
+
+const PublicLayout = () => { 
+    return (
+        <div>
+            
+        </div>
+    )
+}
+
+export default PublicLayout
