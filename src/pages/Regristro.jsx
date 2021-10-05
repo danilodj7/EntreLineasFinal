@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Footer = () => {
+const Regristro = () => {
     return (
         <div>
-            footer
+            registro
         </div>
     )
 }
 
-export default Footer
+export default Regristro
