@@ -1,16 +1,16 @@
 //* Creacion del layout landing page "pagina principal"
 import Footer from 'components/Footer'
 import NavBar from 'components/Navbar'
-import React, { Children } from 'react'
+import React, { children } from 'react'
 
-const PublicLayout = ({Children}) => { 
+const PublicLayout = ({children}) => { 
     return (
         <div className="flex flex-col">
             <NavBar/>
-            <main>{Children}</main>
+            <main>{children}</main>
             <Footer/>
         </div>
     )
 }
 
-export default PublicLayout
+export default PublicLayout;

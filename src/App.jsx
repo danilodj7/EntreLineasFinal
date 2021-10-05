@@ -1,3 +1,4 @@
+import PublicLayout from 'layouts/PublicLayout';
 import Admin from 'pages/Admin';
 import Index from 'pages/Index';
 import Login from 'pages/Login';
@@ -20,7 +21,9 @@ function App() {
           <Admin/>
         </Route>
         <Route path='/'>
+          <PublicLayout>
           <Index/>
+          </PublicLayout>
         </Route>
       </Switch>
     </Router>
