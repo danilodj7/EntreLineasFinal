@@ -3,7 +3,7 @@ import React from 'react'
 const Regristro = () => {
     return (
         <div>
-            registro
+           Este es el registro
         </div>
     )
 }
