@@ -16,12 +16,12 @@ import 'styles/styles.css'
 
 function App() {
   return (
-    <Router>
-     <Switch> //*Swith maetro 
-       <Route path={['/admin','/admin/productos','/admin/clientes','/admin/perfil','/admin/usuarios','/admin/ventas']}>
-          <PrivateLayout>
-            <Switch> 
-            <Route path='/admin/ventas'>
+    <Router>  //*--------------------------------Router maestro
+     <Switch> //*--------------------------------Swith maetro 
+       <Route path={['/admin','/admin/productos','/admin/clientes','/admin/perfil','/admin/usuarios','/admin/ventas']}>//*-----------Route con las listas
+          <PrivateLayout>//*---------------------El Layout
+            <Switch> //*--------------------------Switch Anidado
+            <Route path='/admin/ventas'>//*-------la primera referencia de raiz 
                 <Ventas/>
               </Route>
               <Route path='/admin/usuarios'>
@@ -36,11 +36,11 @@ function App() {
               <Route path='/admin/productos' >
                   <Productos/>
               </Route>
-              <Route path='/admin'>
+              <Route path='/admin'>//*-----------La ultima fuente de raizes el general 
                 <Admin/>
               </Route>
-            </Switch>
-          </PrivateLayout>
+            </Switch>//*-------------------------Cerro el swith Anidado
+          </PrivateLayout>//*-------------------------Cerro el Layout
        </Route>
        <Route path={['/login','/registro']}>
          <AuthLayouth>
