@@ -2,9 +2,9 @@ import React from 'react'
 
 const AuthLayouth = ({children}) => {
     return (
-        <div>
+        <div className='flex flex-col items-center justify-center bg-gray-50 py-2 px-4'>
             authenticacion layout
-            {children}
+           <div className='w-full  '>{children}</div> 
         </div>
     )
 }
