@@ -5,7 +5,7 @@ import React from 'react'
 
 const PublicLayout = ({children}) => { 
     return (
-        //* display flex, displey de columna , justify between que quede el nav arriba y el footer abajo 
+        //* display flex, displey de columna uno debajo de otro, justify between que quede el nav arriba y el footer abajo 
         //* h-screen quede 100%, h-full tamaño completo 100%, overflow-y-scroll para que quede un scroll en el main dentro
 
         <div className="flex flex-col justify-between h-screen"> 
