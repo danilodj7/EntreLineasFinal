@@ -1,3 +1,4 @@
+import PrivateLayout from 'layouts/PrivateLayout';
 import PublicLayout from 'layouts/PublicLayout';
 import Admin from 'pages/Admin';
 import Index from 'pages/Index';
@@ -10,22 +11,11 @@ import 'styles/styles.css'
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path='/login'>
-          <Login/>
-        </Route>
-        <Route path='/registro'>
-          <Regristro/>
-        </Route>
-        <Route path='/admin'>
-          <Admin/>
-        </Route>
-        <Route path='/'>
-          <PublicLayout>
-          <Index/>
-          </PublicLayout>
-        </Route>
-      </Switch>
+     <Switch>
+       <Route></Route>
+       <Route></Route>
+       <Route></Route>
+     </Switch>
     </Router>
   );
 }
