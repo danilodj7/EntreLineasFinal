@@ -1,7 +1,12 @@
 import AuthLayouth from 'layouts/AuthLayouth';
 import PrivateLayout from 'layouts/PrivateLayout';
 import PublicLayout from 'layouts/PublicLayout';
-import Admin from 'pages/Admin';
+import Clientes from 'pages/admin/Clientes';
+import Admin from 'pages/admin/Index';
+import Perfil from 'pages/admin/Perfil';
+import Productos from 'pages/admin/Productos';
+import Usuarios from 'pages/admin/Usuarios';
+import Ventas from 'pages/admin/Ventas';
 import Index from 'pages/Index';
 import Login from 'pages/Login';
 import Regristro from 'pages/Regristro';
@@ -13,9 +18,24 @@ function App() {
   return (
     <Router>
      <Switch> //*Swith maetro 
-       <Route path={['/admin']}>
+       <Route path={['/admin','/admin/productos','/admin/clientes','/admin/perfil','/admin/usuarios','/admin/ventas']}>
           <PrivateLayout>
-            <Switch>
+            <Switch> 
+            <Route path='/admin/ventas'>
+                <Ventas/>
+              </Route>
+              <Route path='/admin/usuarios'>
+                  <Usuarios/>
+              </Route>
+              <Route path='/admin/perfil'>
+                  <Perfil/>
+              </Route>
+              <Route path='/admin/clientes'>
+                <Clientes/>
+              </Route>
+              <Route path='/admin/productos' >
+                  <Productos/>
+              </Route>
               <Route path='/admin'>
                 <Admin/>
               </Route>
