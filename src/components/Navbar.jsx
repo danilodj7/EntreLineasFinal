@@ -11,12 +11,12 @@ const NavBar = () => {
                 <li>Quienes Somos</li>
                 <Link to='/login'>
                 <li  >
-                    <button className='bg-gray-800 p-2 rounded-lg hover:bg-blue-400 hover:text-gray-900'>Iniciar sesion</button>
+                    <button className='bg-gray-800 p-2 rounded-lg  hover:bg-blue-400 hover:text-gray-900'>Iniciar sesion</button>
                 </li>
                 </Link>
                 <Link to='/registro'>
                 <li>
-                <button className='bg-gray-800 p-2 rounded-lg hover:bg-blue-400 hover:text-gray-900'>Registrarse</button>
+                <button className='bg-gray-800 p-2 rounded-lg  hover:bg-blue-400 hover:text-gray-900'>Registrarse</button>
                 </li>
                 </Link>
             </ul>
