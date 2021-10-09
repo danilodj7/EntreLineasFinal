@@ -22,7 +22,7 @@ const Productos = () => {
    
     return (
         <form className='flex flex-col justify-center'>
-            <h2 className='py-2 text-gray-300 font-extrabold mb-4 text-center'>Formulario Creación de Productos</h2>
+            <h2 className='py-2 text-gray-100 font-extrabold mb-4 text-center'>Formulario Creación de Productos</h2>
              <input  type="text" className='appearance-none px-20  border  border-gray-400 rounded-md py-2 focus:outline-none' placeholder='Codigo del producto'/>
             <input  type="text" className='appearance-none px-20 mt-4 border border-gray-400 rounded-md py-2 focus:outline-none' placeholder='Nombre del producto'/>
             <input type="text" className='appearance-none px-20 mt-4 border border-gray-400 rounded-md py-2 focus:outline-none' placeholder='Marca del Producto'/>

@@ -2,3 +2,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#bg-imagen{
+  
+    background-image: linear-gradient(
+        rgba(5, 94, 12, 0.5),
+        rgba(7, 2, 6, 0.5)
+      ),url(/src/media/carretera.jpg);
+    /*Quede horizontal*/
+    background-position: center center;
+     /*no repetir la imagen*/
+    background-repeat: no-repeat;
+     /*se fija en la ventana de visualizacion*/
+    background-attachment: fixed;
+     /*se amplio o disminuya dependiendo de la pantalla*/
+    background-size: cover;
+    /*si hay error muestre ese color*/
+    background-color: #282623;
+  }
