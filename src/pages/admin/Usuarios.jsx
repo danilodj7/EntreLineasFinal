@@ -24,7 +24,9 @@ const Usuarios = () => {
                {textoBoton}
             </button>
            {mostrarTabla ?<TablaUsuarios />: <FormularioCreacionUsuarios/>}
-           
+           <span className='text-green-600'>Usuario Enviado con Exito!</span>
+           <span className='text-red-700' >Error Usuario no Enviado!</span>
+           <span></span>
         </div>
     )
 }
@@ -34,19 +36,34 @@ const TablaUsuarios =()=>{
 }
 
 const FormularioCreacionUsuarios =()=>{
+    
+        const [codigo, setCodigo] =useState();
+        const [nombre, setNombre] =useState();
+        const [apellido, setApellido] =useState();
+        const [email, setEmail] =useState();
+        const [cedula, setCedula] =useState();
+        const [telefono, setTelefono] =useState();
+
+        const enviarAlBackend =()=>{
+            console.log("codigo",codigo,"nombre",nombre,"apellido",apellido,"faltan anexar mas")
+        }
+
     return <div>
          <h2 className='py-2 text-gray-200 font-black mb-4 text-center'>Creacion de Usuarios</h2>
         <form action="" className='grid grid-cols-1 justify-center'>
-           
-           
+    
            <label  htmlFor="codigo" className='text-gray-200 font-extrabold'>
                Codigo del Usuario
             <input 
              name='codigo'   
              type="text" 
-             className='appearance-none px-16  border  border-gray-300 rounded-md py-2 ml-6 text-center focus:outline-none' 
+             className='appearance-none px-16  border  border-gray-300 rounded-md py-2 ml-6 text-gray-800 text-center focus:outline-none' 
              placeholder='Codigo del Usuario'
              required
+             value={codigo}
+             onChange={(e)=>{
+                 setCodigo(e.target.value)
+             }}
              />
             </label>
             
@@ -55,9 +72,15 @@ const FormularioCreacionUsuarios =()=>{
             <input  
             name='nombre'
             type="text" 
-            className='appearance-none px-16 mt-4 border border-gray-100 rounded-md py-2 ml-4 text-center focus:outline-none' 
+            className='appearance-none px-16 mt-4 border border-gray-100 rounded-md py-2 ml-4 text-gray-800 text-center focus:outline-none' 
             placeholder='Nombre del Usuario'
-            required/>
+            required
+            value={nombre}
+             onChange={(e)=>{
+                 setNombre(e.target.value)
+             }}
+            />
+            
             </label>
 
             <label htmlFor="apellido" className='text-gray-200 font-extrabold '> 
@@ -65,9 +88,15 @@ const FormularioCreacionUsuarios =()=>{
             <input 
             name='apellido'
             type="text" 
-            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-4 text-center  focus:outline-none' 
+            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-4 text-gray-800 text-center  focus:outline-none' 
             placeholder='Apellido del Usuario'
-            required/>
+            required
+            value={apellido}
+             onChange={(e)=>{
+                 setApellido(e.target.value)
+             }}
+            />
+            
             </label>
 
             <label htmlFor="email" className='text-gray-200 font-extrabold '>
@@ -75,9 +104,15 @@ const FormularioCreacionUsuarios =()=>{
             <input 
             name='email'
             type="email" 
-            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-10 text-center  focus:outline-none' 
+            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-10 text-gray-800 text-center  focus:outline-none' 
             placeholder='Correo del Usuario'
-            required/>
+            required
+            value={email}
+             onChange={(e)=>{
+                 setEmail(e.target.value)
+             }}
+            />
+            
             </label>
 
 
@@ -86,9 +121,15 @@ const FormularioCreacionUsuarios =()=>{
             <input 
             name='cedula'
             type="number" 
-            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-7 text-center  focus:outline-none' 
+            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-7 text-gray-800 text-center  focus:outline-none' 
             placeholder='Cedula del Usuario'
-            required/>
+            required
+            value={cedula}
+             onChange={(e)=>{
+                 setCedula(e.target.value)
+             }}
+            />
+            
             </label>
             
             <label htmlFor="telefono" className='text-gray-200 font-extrabold '>
@@ -96,12 +137,26 @@ const FormularioCreacionUsuarios =()=>{
             <input 
             name='telefono'
             type="text" 
-            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-3 text-center  focus:outline-none' 
+            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-3 text-gray-800 text-center  focus:outline-none' 
             placeholder='Telefono' 
-            required/>
+            required
+            value={telefono}
+             onChange={(e)=>{
+                 setTelefono(e.target.value)
+             }}
+            />
+            
             </label>
 
-            <button type='submit' className='mt-4 bg-green-500 px-36  rounded-md py-2 hover:bg-green-600'>Enviar Datos</button>
+            <button 
+            type='button'
+            className='mt-4 bg-green-500 px-36  rounded-md py-2 hover:bg-green-600'
+            onClick={()=>{
+                enviarAlBackend()
+            
+            }}>
+                Enviar Datos
+            </button>
         </form>
     </div>
 }
