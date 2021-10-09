@@ -1,4 +1,6 @@
 import React ,{ useEffect,useState}from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const Usuarios = () => {
     const [mostrarTabla,setMostrarTabla] = useState(true)
@@ -23,19 +25,32 @@ const Usuarios = () => {
            className='mt-4 bg-green-500 px-36  rounded-md py-2 hover:bg-green-600'>
                {textoBoton}
             </button>
-           {mostrarTabla ?<TablaUsuarios />: <FormularioCreacionUsuarios/>}
-           <span className='text-green-600'>Usuario Enviado con Exito!</span>
-           <span className='text-red-700' >Error Usuario no Enviado!</span>
-           <span></span>
+           {mostrarTabla ?<TablaUsuarios />: <FormularioCreacionUsuarios funcionParaMostrarTabla={setMostrarTabla}/>}
+           <ToastContainer position="bottom-center" autoClose={5000} />
+           
+
         </div>
     )
 }
 
 const TablaUsuarios =()=>{
-    return <div>mostrar la tabla de usuarios</div>
+    return <div>
+        <table>
+            <thead>
+               
+            </thead>
+            <tbody>
+                <tr>
+                    <td>dato 1</td>
+                    
+                </tr>
+                    
+            </tbody>
+        </table>
+    </div>
 }
 
-const FormularioCreacionUsuarios =()=>{
+const FormularioCreacionUsuarios =({funcionParaMostrarTabla})=>{
     
         const [codigo, setCodigo] =useState();
         const [nombre, setNombre] =useState();
@@ -46,6 +61,10 @@ const FormularioCreacionUsuarios =()=>{
 
         const enviarAlBackend =()=>{
             console.log("codigo",codigo,"nombre",nombre,"apellido",apellido,"faltan anexar mas")
+            toast.success(('🦄 Cliente Enviado con Exito!'),{
+                autoClose: 5000,
+            })
+            funcionParaMostrarTabla(true)
         }
 
     return <div>
