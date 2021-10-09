@@ -1,10 +1,40 @@
 import React ,{ useEffect,useState}from 'react'
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
+
+const usuariosBackend =[
+    {
+        codigo:"27098",
+        nombre:"pepe",
+        apellido:"almeja",
+        email:"pepe@gmail.com",
+        cedula:278176546,
+        telefono:"27089767"
+
+    },
+
+    {
+        codigo:"27099",
+        nombre:"carlos",
+        apellido:"almejados",
+        email:"carlos@gmail.com",
+        cedula:278176547,
+        telefono:"3306564535"
+
+    },
+]
 
 const Usuarios = () => {
     const [mostrarTabla,setMostrarTabla] = useState(true)
+    const [usuarios,setUsuarios]= useState([])
     const [textoBoton , setTextoBoton]=useState('Crear Nuevo Usuario')
+    
+    useEffect(()=>{
+        //obtener lista de usuarios desde el fronted
+        setUsuarios(usuariosBackend)
+    },[])
+    
+    
     useEffect(()=>{
         if(mostrarTabla){
             setTextoBoton('Crear Nuevo Usuario')
@@ -25,7 +55,18 @@ const Usuarios = () => {
            className='mt-4 bg-green-500 px-36  rounded-md py-2 hover:bg-green-600'>
                {textoBoton}
             </button>
-           {mostrarTabla ?<TablaUsuarios />: <FormularioCreacionUsuarios funcionParaMostrarTabla={setMostrarTabla}/>}
+           {mostrarTabla ?
+           (<TablaUsuarios listaUsuarios={usuarios} />
+           ):( 
+           <FormularioCreacionUsuarios 
+           
+            funcionParaMostrarTabla={setMostrarTabla} 
+            listaUsuarios={usuarios}
+            funcionParaAgregarUsuario={setUsuarios}
+            
+            />
+           )}
+           
            <ToastContainer position="bottom-center" autoClose={5000} />
            
 
@@ -33,24 +74,49 @@ const Usuarios = () => {
     )
 }
 
-const TablaUsuarios =()=>{
+const TablaUsuarios =({listaUsuarios })=>{
+    useEffect(()=>{
+        console.log('listado de usurarios', listaUsuarios)
+    },[listaUsuarios])
     return <div>
+        <h2 className='text-gray-100 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
         <table>
             <thead>
-               
+               <tr className='text-gray-100 '>
+                   <th className='md:p-2'>Codigo</th>
+                   <th className='md:p-2'>Nombre</th>
+                   <th className='md:p-2'>Apellido</th>
+                   <th className='md:p-2'>Email</th>
+                   <th className='md:p-2'>Cedula</th>
+                   <th className='md:p-2'>Telefono</th>
+               </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>dato 1</td>
-                    
-                </tr>
+            <tbody className='text-gray-100'>
+                {listaUsuarios.map((usuarios)=>{
+                    return(
+                        <tr>
+                        <td className='md:p-2'>{usuarios.codigo}</td>
+                        <td className='md:p-2'>{usuarios.nombre}</td>
+                        <td className='md:p-2'>{usuarios.apellido}</td>
+                        <td className='md:p-2'>{usuarios.email}</td>
+                        <td className='md:p-2'>{usuarios.cedula}</td>
+                        <td className='md:p-2'>{usuarios.telefono}</td>
+                    </tr>
+                    );
+                
+                })}
+               
                     
             </tbody>
         </table>
     </div>
 }
 
-const FormularioCreacionUsuarios =({funcionParaMostrarTabla})=>{
+const FormularioCreacionUsuarios =({
+    funcionParaMostrarTabla,
+    listaUsuarios,
+    funcionParaAgregarUsuario
+})=>{
     
         const [codigo, setCodigo] =useState();
         const [nombre, setNombre] =useState();
@@ -65,6 +131,11 @@ const FormularioCreacionUsuarios =({funcionParaMostrarTabla})=>{
                 autoClose: 5000,
             })
             funcionParaMostrarTabla(true)
+            //...listaUsuarios = todo lo que ya habia + n cosas nuevas
+            funcionParaAgregarUsuario([
+            ...listaUsuarios,
+            {codigo:codigo,nombre:nombre,apellido:apellido,email:email,cedula:cedula,telefono:telefono}
+            ])
         }
 
     return <div>
