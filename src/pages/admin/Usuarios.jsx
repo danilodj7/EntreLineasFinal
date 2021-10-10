@@ -1,4 +1,4 @@
-import React ,{ useEffect,useState}from 'react'
+import React ,{ useEffect,useState,useRef}from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -117,13 +117,13 @@ const FormularioCreacionUsuarios =({
     listaUsuarios,
     funcionParaAgregarUsuario
 })=>{
-    
-        const [codigo, setCodigo] =useState();
-        const [nombre, setNombre] =useState();
-        const [apellido, setApellido] =useState();
-        const [email, setEmail] =useState();
-        const [cedula, setCedula] =useState();
-        const [telefono, setTelefono] =useState();
+        const form =useRef(null); //trabajar el hook useref para user los nombres de los inputs como variables
+        const [codigo, setCodigo] =useState('');
+        const [nombre, setNombre] =useState('');
+        const [apellido, setApellido] =useState('');
+        const [email, setEmail] =useState('');
+        const [cedula, setCedula] =useState('');
+        const [telefono, setTelefono] =useState('');
 
         const enviarAlBackend =()=>{
             console.log("codigo",codigo,"nombre",nombre,"apellido",apellido,"faltan anexar mas")
@@ -140,12 +140,17 @@ const FormularioCreacionUsuarios =({
 
         const submitForm =(e)=>{
             e.preventDefault();
-            console.log("Datos enviados")
+            const fd = new FormData(form.current)
+            fd.forEach((val,el)=>{
+                console.log(val,el)
+            }) //se crea el objeto fd 
+            console.log("Datos enviados",fd)
+
         }
     return (
         <div>
          <h2 className='py-2 text-gray-200 font-black mb-4 text-center'>Creacion de Usuarios</h2>
-        <form onSubmit={submitForm} className='grid grid-cols-1 justify-center'>
+        <form ref={form} onSubmit={submitForm} className='grid grid-cols-1 justify-center'>
     
            <label  htmlFor="codigo" className='text-gray-200 font-extrabold'>
                Codigo del Usuario
