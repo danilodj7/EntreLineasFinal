@@ -239,7 +239,7 @@ const FormularioCreacionUsuarios =({
             </label>
 
             <button 
-            type='button'
+            type='submit'
             className='mt-4 bg-green-500 px-36  rounded-md py-2 hover:bg-green-600'
             onClick={()=>{
                 enviarAlBackend()
