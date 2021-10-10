@@ -138,9 +138,14 @@ const FormularioCreacionUsuarios =({
             ])
         }
 
-    return <div>
+        const submitForm =(e)=>{
+            e.preventDefault();
+            console.log("Datos enviados")
+        }
+    return (
+        <div>
          <h2 className='py-2 text-gray-200 font-black mb-4 text-center'>Creacion de Usuarios</h2>
-        <form action="" className='grid grid-cols-1 justify-center'>
+        <form onSubmit={submitForm} className='grid grid-cols-1 justify-center'>
     
            <label  htmlFor="codigo" className='text-gray-200 font-extrabold'>
                Codigo del Usuario
@@ -249,6 +254,7 @@ const FormularioCreacionUsuarios =({
             </button>
         </form>
     </div>
+    )
 }
 
 
