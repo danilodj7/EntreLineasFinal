@@ -1,4 +1,4 @@
-import React ,{ useEffect,useState,useRef}from 'react'
+import React ,{ useEffect,useState,useRef}from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -47,7 +47,7 @@ const Usuarios = () => {
         <div>
            <h2>Administracion de Usuarios</h2> 
 
-           <button
+           <button   
                     onClick={()=>{
                         setMostrarTabla(!mostrarTabla)
                     }} 
@@ -60,9 +60,9 @@ const Usuarios = () => {
            ):( 
            <FormularioCreacionUsuarios 
            
-            funcionParaMostrarTabla={setMostrarTabla} 
+            setMostrarTabla={setMostrarTabla} 
             listaUsuarios={usuarios}
-            funcionParaAgregarUsuario={setUsuarios}
+            setUsuarios={setUsuarios}
             
             />
            )}
@@ -78,7 +78,7 @@ const TablaUsuarios =({listaUsuarios })=>{
     useEffect(()=>{
         console.log('listado de usurarios', listaUsuarios)
     },[listaUsuarios])
-    return <div>
+    return (<div>
         <h2 className='text-gray-100 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
         <table>
             <thead>
@@ -110,43 +110,26 @@ const TablaUsuarios =({listaUsuarios })=>{
             </tbody>
         </table>
     </div>
+    )
 }
 
-const FormularioCreacionUsuarios =({
-    funcionParaMostrarTabla,
-    listaUsuarios,
-    funcionParaAgregarUsuario
-})=>{
-        const form =useRef(null); //trabajar el hook useref para user los nombres de los inputs como variables
-        const [codigo, setCodigo] =useState('');
-        const [nombre, setNombre] =useState('');
-        const [apellido, setApellido] =useState('');
-        const [email, setEmail] =useState('');
-        const [cedula, setCedula] =useState('');
-        const [telefono, setTelefono] =useState('');
-
-        const enviarAlBackend =()=>{
-            console.log("codigo",codigo,"nombre",nombre,"apellido",apellido,"faltan anexar mas")
-            toast.success(('🦄 Cliente Enviado con Exito!'),{
-                autoClose: 5000,
-            })
-            funcionParaMostrarTabla(true)
-            //...listaUsuarios = todo lo que ya habia + n cosas nuevas
-            funcionParaAgregarUsuario([
-            ...listaUsuarios,
-            {codigo:codigo,nombre:nombre,apellido:apellido,email:email,cedula:cedula,telefono:telefono}
-            ])
-        }
-
+const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=>{
+    const form =useRef(null);
+         //trabajar el hook useref para user los nombres de los inputs como variables
         const submitForm =(e)=>{
             e.preventDefault();
             const fd = new FormData(form.current)
-            fd.forEach((val,el)=>{
-                console.log(val,el)
-            }) //se crea el objeto fd 
-            console.log("Datos enviados",fd)
 
-        }
+            const nuevoUsuario={};
+            fd.forEach((value,key)=>{
+                nuevoUsuario[key]=value;
+            }); //se crea el objeto fd 
+
+            setMostrarTabla(true);
+            setUsuarios([...listaUsuarios,nuevoUsuario]);
+            toast.success('Vehiculo agregado con éxito');
+            
+        };
     return (
         <div>
          <h2 className='py-2 text-gray-200 font-black mb-4 text-center'>Creacion de Usuarios</h2>
@@ -160,10 +143,7 @@ const FormularioCreacionUsuarios =({
              className='appearance-none px-16  border  border-gray-300 rounded-md py-2 ml-6 text-gray-800 text-center focus:outline-none' 
              placeholder='Codigo del Usuario'
              required
-             value={codigo}
-             onChange={(e)=>{
-                 setCodigo(e.target.value)
-             }}
+            
              />
             </label>
             
@@ -175,10 +155,7 @@ const FormularioCreacionUsuarios =({
             className='appearance-none px-16 mt-4 border border-gray-100 rounded-md py-2 ml-4 text-gray-800 text-center focus:outline-none' 
             placeholder='Nombre del Usuario'
             required
-            value={nombre}
-             onChange={(e)=>{
-                 setNombre(e.target.value)
-             }}
+            
             />
             
             </label>
@@ -191,10 +168,7 @@ const FormularioCreacionUsuarios =({
             className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-4 text-gray-800 text-center  focus:outline-none' 
             placeholder='Apellido del Usuario'
             required
-            value={apellido}
-             onChange={(e)=>{
-                 setApellido(e.target.value)
-             }}
+            
             />
             
             </label>
@@ -207,10 +181,7 @@ const FormularioCreacionUsuarios =({
             className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-10 text-gray-800 text-center  focus:outline-none' 
             placeholder='Correo del Usuario'
             required
-            value={email}
-             onChange={(e)=>{
-                 setEmail(e.target.value)
-             }}
+           
             />
             
             </label>
@@ -224,10 +195,6 @@ const FormularioCreacionUsuarios =({
             className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-7 text-gray-800 text-center  focus:outline-none' 
             placeholder='Cedula del Usuario'
             required
-            value={cedula}
-             onChange={(e)=>{
-                 setCedula(e.target.value)
-             }}
             />
             
             </label>
@@ -240,10 +207,6 @@ const FormularioCreacionUsuarios =({
             className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-3 text-gray-800 text-center  focus:outline-none' 
             placeholder='Telefono' 
             required
-            value={telefono}
-             onChange={(e)=>{
-                 setTelefono(e.target.value)
-             }}
             />
             
             </label>
@@ -251,10 +214,7 @@ const FormularioCreacionUsuarios =({
             <button 
             type='submit'
             className='mt-4 bg-green-500 px-36  rounded-md py-2 hover:bg-green-600'
-            onClick={()=>{
-                enviarAlBackend()
-            
-            }}>
+            >
                 Enviar Datos
             </button>
         </form>
