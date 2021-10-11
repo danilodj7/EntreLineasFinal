@@ -12,12 +12,18 @@ import Login from 'pages/Login';
 import Regristro from 'pages/Regristro';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css'
-
+import {DarkModeContext } from 'context/darkMode'
+import { useEffect, useState } from 'react/cjs/react.development';
 
 function App() {
+  const [darkMode,setDarkMode] =useState(false)
+  useEffect(()=>{
+    console.log('Modo dark',darkMode)
+  },[darkMode])
   return (
-    
-    <Router>  
+    <div className='App'>
+      <DarkModeContext.Provider value={{darkMode,setDarkMode}}> 
+      <Router>  
      
      <Switch> 
      
@@ -74,6 +80,9 @@ function App() {
        </Route>
      </Switch>
     </Router>
+      </DarkModeContext.Provider>
+    
+    </div>
   );
 }
 
