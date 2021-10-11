@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import TriggerDarkMode from './TriggerDarkMode'
 
 const NavBar = () => {
-    
-    
 
     return (
         <div className='bg-gray-900' >
