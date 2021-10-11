@@ -10,5 +10,4 @@ const TriggerDarkMode = () => {
             {darkMode? 'Desactivar':'Activar'}Modo Dark</button></li>
     )
 }
-
 export default TriggerDarkMode
