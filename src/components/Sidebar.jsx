@@ -7,14 +7,16 @@ import ImagenLogo from './ImagenLogo'
 
 
 
+
+
 const Sidebar = () => {
     return (
-        <div className=' flex flex-col w-72 bg-gray-800 p-4 text-center text-gray-100 '>
+        <div className=' hidden md:flex md:w-72 flex-col w-72 bg-gray-800 p-4 text-center text-gray-100 '>
             <Link to='/admin'>
             <ImagenLogo/>
             </Link>
-
-          <Ruta ruta='/admin/perfil' nombre='Perfil'/>
+         
+          <Ruta ruta='/admin/perfil' nombre='Perfil' />
           <Ruta ruta='/admin/productos' nombre='Productos'/>
           <Ruta ruta='/admin/ventas' nombre='Ventas' />
           <Ruta ruta='/admin/usuarios' nombre='Productos'/>
@@ -29,9 +31,8 @@ const Sidebar = () => {
 }
 
 const Ruta =({icono,ruta,nombre})=>{
-
     return(  <Link to={ruta}>
-    <button className='mt-2'>
+    <button className='mt-2'>   
         {nombre}
     </button>
     </Link>
