@@ -1,3 +1,4 @@
+import useActiveRoute from 'hooks/useActiveRoute'
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useState,useEffect } from 'react/cjs/react.development'
@@ -35,18 +36,7 @@ const Sidebar = () => {
 }
 
 const Ruta =({icono,ruta,nombre})=>{
-    const location = useLocation()
-    const [isActive,setisActive]= useState(false)
-    
-    useEffect(() => {
-               
-        console.log(location,ruta)    
-       if (location.pathname.includes(ruta)) {
-           setisActive(true)
-       }else{
-           setisActive(false)
-       }
-    }, [location,ruta])
+     const isActive = useActiveRoute(ruta)
     
     return(  <Link to={ruta}>
     <button 
