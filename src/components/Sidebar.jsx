@@ -19,7 +19,8 @@ const Sidebar = () => {
           <Ruta ruta='/admin/perfil' nombre='Perfil' />
           <Ruta ruta='/admin/productos' nombre='Productos'/>
           <Ruta ruta='/admin/ventas' nombre='Ventas' />
-          <Ruta ruta='/admin/usuarios' nombre='Productos'/>
+          <Ruta ruta='/admin/usuarios' nombre='Usuarios'/>
+          <Ruta ruta='/admin/clientes' nombre='Clientes'/>
           <div className='mt-60'>
           <Ruta ruta='/admin/cerrar sesion' nombre='Cerrar Sesion' />
           </div>
