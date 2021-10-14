@@ -1,6 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import { useState,useEffect } from 'react/cjs/react.development'
 import ImagenLogo from './ImagenLogo'
+
+
 
 
 
@@ -32,8 +35,23 @@ const Sidebar = () => {
 }
 
 const Ruta =({icono,ruta,nombre})=>{
+    const location = useLocation()
+    const [isActive,setisActive]= useState(false)
+    
+    useEffect(() => {
+               
+        console.log(location,ruta)    
+       if (location.pathname.includes(ruta)) {
+           setisActive(true)
+       }else{
+           setisActive(false)
+       }
+    }, [location,ruta])
+    
     return(  <Link to={ruta}>
-    <button className='mt-2'>   
+    <button 
+        className={`p-1 mt-2 bg-gray-700 bg-${
+            isActive ?'indigo':'gray'}-800 hover:bg-indigo-700 flex w-full text-white rounded-md`}>   
         {nombre}
     </button>
     </Link>
