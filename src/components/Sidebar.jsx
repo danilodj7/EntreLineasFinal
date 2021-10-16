@@ -8,7 +8,7 @@ import ImagenLogo from './ImagenLogo'
 
 const Sidebar = () => {
     return (
-        <div className=' hidden md:flex md:w-72 flex-col w-72 bg-gray-800 p-4 text-center text-gray-100 '>
+        <div className=' hidden md:flex md:w-60 flex-col  bg-gray-800 p-3 text-center text-gray-100 '>
             <Link to='/admin'>
             <ImagenLogo/>
             </Link>

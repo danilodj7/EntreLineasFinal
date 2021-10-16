@@ -24,7 +24,7 @@
  
   .tabla td,
   .tabla th{
-
+      text-align: center;
       border:1px solid ;
   }
 

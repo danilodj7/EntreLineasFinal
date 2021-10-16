@@ -101,10 +101,8 @@ const TablaUsuarios =({listaUsuarios })=>{
                 {listaUsuarios.map((usuarios)=>{
                     return(
                        <FilaUsuario usuarios={usuarios} key={nanoid()}/>
-                    );
-                
+                    );   
                 })}
-               
                     
             </tbody>
         </table>
@@ -155,12 +153,12 @@ const TablaUsuarios =({listaUsuarios })=>{
                     </>
          ) :(
             <>
-        <td className='md:p-2'>{usuarios.codigo}</td>
-        <td className='md:p-2'>{usuarios.nombre}</td>
-        <td className='md:p-2'>{usuarios.apellido}</td>
-        <td className='md:p-2'>{usuarios.email}</td>
-        <td className='md:p-2'>{usuarios.cedula}</td>
-        <td className='md:p-2'>{usuarios.telefono}</td>
+        <td className='md:p-1'>{usuarios.codigo}</td>
+        <td className='md:p-1'>{usuarios.nombre}</td>
+        <td className='md:p-1'>{usuarios.apellido}</td>
+        <td className='md:p-1'>{usuarios.email}</td>
+        <td className='md:p-1'>{usuarios.cedula}</td>
+        <td className='md:p-1'>{usuarios.telefono}</td>
         </>
             ) }
         <td>
