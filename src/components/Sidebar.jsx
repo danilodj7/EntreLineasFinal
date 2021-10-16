@@ -1,14 +1,7 @@
 import useActiveRoute from 'hooks/useActiveRoute'
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { useState,useEffect } from 'react/cjs/react.development'
+import { Link } from 'react-router-dom'
 import ImagenLogo from './ImagenLogo'
-
-
-
-
-
-
 
 
 
@@ -25,7 +18,7 @@ const Sidebar = () => {
           <Ruta ruta='/admin/ventas' nombre='Ventas' />
           <Ruta ruta='/admin/usuarios' nombre='Usuarios'/>
           <Ruta ruta='/admin/clientes' nombre='Clientes'/>
-          <div className='mt-60'>
+          <div className='mt-52'>
           <Ruta ruta='/admin/cerrar sesion' nombre='Cerrar Sesion' />
           </div>
            

@@ -2,6 +2,7 @@ import React ,{ useEffect,useState,useRef}from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const usuariosBackend =[
     {
         codigo:"27098",
@@ -46,7 +47,7 @@ const Usuarios = () => {
     return (
         <div>
            <h2>Administracion de Usuarios</h2> 
-
+        <div className='flex flex-col w-full'>
            <button   
                     onClick={()=>{
                         setMostrarTabla(!mostrarTabla)
@@ -55,6 +56,7 @@ const Usuarios = () => {
            className='mt-4 bg-green-500 px-36  rounded-md py-2 hover:bg-green-600'>
                {textoBoton}
             </button>
+            </div>
            {mostrarTabla ?
            (<TablaUsuarios listaUsuarios={usuarios} />
            ):( 
@@ -78,9 +80,10 @@ const TablaUsuarios =({listaUsuarios })=>{
     useEffect(()=>{
         console.log('listado de usurarios', listaUsuarios)
     },[listaUsuarios])
-    return (<div>
-        <h2 className='text-gray-100 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
-        <table>
+    return (
+    <div className='flex flex-col items-center justify-center w-full '>
+        <h2 className='text-gray-900 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
+        <table className='tabla'>
             <thead>
                <tr className='text-gray-100 '>
                    <th className='md:p-2'>Codigo</th>
@@ -91,7 +94,7 @@ const TablaUsuarios =({listaUsuarios })=>{
                    <th className='md:p-2'>Telefono</th>
                </tr>
             </thead>
-            <tbody className='text-gray-100'>
+            <tbody className='text-gray-900 font-medium'>
                 {listaUsuarios.map((usuarios)=>{
                     return(
                         <tr>

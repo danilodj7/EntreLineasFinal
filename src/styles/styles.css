@@ -20,3 +20,27 @@
     /*si hay error muestre ese color*/
     background-color: #282623;
   }
+
+ 
+  .tabla td,
+  .tabla th{
+
+      border:1px solid ;
+  }
+
+  .tabla th{
+    background-color: #282623;
+  }
+
+
+
+
+.tabla tr:nth-child(even){
+    background-color: #42a042;
+}
+
+.tabla tr:hover {
+  background-color: #1da830;
+  
+  cursor: pointer;
+}
