@@ -84,6 +84,7 @@ const TablaUsuarios =({listaUsuarios })=>{
     return (
     <div className='flex flex-col items-center justify-center w-full '>
         <h2 className='text-gray-900 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
+        <form action="" className='w-full'>
         <table className='tabla'>
             <thead>
                <tr className='text-gray-100 '>
@@ -107,6 +108,8 @@ const TablaUsuarios =({listaUsuarios })=>{
                     
             </tbody>
         </table>
+        </form>
+        
     </div>
     )
 }
