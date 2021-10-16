@@ -30,6 +30,13 @@ const Usuarios = () => {
     const [mostrarTabla,setMostrarTabla] = useState(true)
     const [usuarios,setUsuarios]= useState([])
     const [textoBoton , setTextoBoton]=useState('Crear Nuevo Usuario')
+    const [ejecutarconsulta,setEjecutarConsulta]=useState(true);
+
+    useEffect(() => {
+       if (ejecutarconsulta){
+
+       }
+    }, [ejecutarconsulta])
     
     useEffect(()=>{
         //obtener lista de usuarios desde el fronted
@@ -78,13 +85,15 @@ const Usuarios = () => {
 }
 
 const TablaUsuarios =({listaUsuarios })=>{
+    
     useEffect(()=>{
         console.log('listado de usurarios', listaUsuarios)
     },[listaUsuarios])
+   
     return (
     <div className='flex flex-col items-center justify-center w-full '>
         <h2 className='text-gray-900 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
-        <form action="" className='w-full'>
+        
         <table className='tabla'>
             <thead>
                <tr className='text-gray-100 '>
@@ -106,14 +115,26 @@ const TablaUsuarios =({listaUsuarios })=>{
                     
             </tbody>
         </table>
-        </form>
+       
         
     </div>
     )
 }
 
     const FilaUsuario =({usuarios})=>{
-        const [edit, setEdit] =useState(false)
+        const [edit, setEdit] =useState(false) 
+        const[infoNuevoUsuario,setInfoNuevoUsuario] =useState({
+            codigo:usuarios.codigo,
+            nombre: usuarios.nombre,
+            apellido: usuarios.apellido,
+            email:usuarios.email,
+            cedula:usuarios.cedula,
+            telefono:usuarios.telefono,
+        })
+        const actualizarUsuarios=()=>{
+            console.log(infoNuevoUsuario)
+        };
+        
         return(
             <tr >
                 {
@@ -123,32 +144,44 @@ const TablaUsuarios =({listaUsuarios })=>{
                         <td>
                             <input type="text" 
                              className='appearance-none px-0  border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
-                            defaultValue={usuarios.codigo}/>
+                            value={infoNuevoUsuario.codigo}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,codigo:e.target.value})}
+                            />
                         </td>
                         <td>
                             <input type="text" 
                             className='appearance-none px-0  border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
-                            defaultValue={usuarios.nombre}/>
+                            value={infoNuevoUsuario.nombre}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,nombre:e.target.value})}
+                            />
                         </td>
                         <td>
                             <input type="text" 
                             className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
-                            defaultValue={usuarios.apellido}/>
-                        </td>
+                            value={infoNuevoUsuario.apellido}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,apellido:e.target.value})}
+                            />
+                         </td>
                         <td>
                             <input type="text" 
                             className='appearance-none px-0 border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
-                            defaultValue={usuarios.email}/>
+                            value={infoNuevoUsuario.email}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,email:e.target.value})}
+                            />
                         </td>
                         <td>
                             <input type="text"
                             className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
-                             defaultValue={usuarios.cedula}/>
+                            value={infoNuevoUsuario.cedula}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,cedula:e.target.value})}
+                            />
                         </td>
                         <td>
                             <input type="text" 
                             className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
-                            defaultValue={usuarios.telefono}/>
+                            value={infoNuevoUsuario.telefono}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,telefono:e.target.value})}
+                            />
                         </td>
                     </>
          ) :(
@@ -164,13 +197,15 @@ const TablaUsuarios =({listaUsuarios })=>{
         <td>
             <div className='flex w-full justify-around '>
                 {edit ?(
-                     <i onClick={()=>setEdit(!edit)} 
+                    
+                     <i onClick={()=>actualizarUsuarios()} 
                      className='fas fa-check text-green-800 hover:text-white'/>
+                     
                 ):(
                 <i onClick={()=>setEdit(!edit)}
                  className='fas fa-pencil-alt text-gray-700 hover:text-gray-900'/>
                 )}
-                <i className='fas fa-trash text-gray-700 hover:text-red-500'/>
+                <i  className='fas fa-trash text-gray-700 hover:text-red-500'/>
             </div>
         </td>
     </tr>
