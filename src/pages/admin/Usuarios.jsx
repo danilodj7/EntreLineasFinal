@@ -93,19 +93,13 @@ const TablaUsuarios =({listaUsuarios })=>{
                    <th className='md:p-2'>Email</th>
                    <th className='md:p-2'>Cedula</th>
                    <th className='md:p-2'>Telefono</th>
+                   <th className='md:p-2'>Acciones</th>
                </tr>
             </thead>
             <tbody className='text-gray-900 font-medium'>
                 {listaUsuarios.map((usuarios)=>{
                     return(
-                        <tr key={nanoid()}>
-                        <td className='md:p-2'>{usuarios.codigo}</td>
-                        <td className='md:p-2'>{usuarios.nombre}</td>
-                        <td className='md:p-2'>{usuarios.apellido}</td>
-                        <td className='md:p-2'>{usuarios.email}</td>
-                        <td className='md:p-2'>{usuarios.cedula}</td>
-                        <td className='md:p-2'>{usuarios.telefono}</td>
-                    </tr>
+                       <FilaUsuario usuarios={usuarios} key={nanoid()}/>
                     );
                 
                 })}
@@ -116,6 +110,72 @@ const TablaUsuarios =({listaUsuarios })=>{
     </div>
     )
 }
+
+    const FilaUsuario =({usuarios})=>{
+        const [edit, setEdit] =useState(false)
+        return(
+            <tr >
+                {
+                    edit?(
+
+                    <>
+                        <td>
+                            <input type="text" 
+                             className='appearance-none px-0  border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
+                            defaultValue={usuarios.codigo}/>
+                        </td>
+                        <td>
+                            <input type="text" 
+                            className='appearance-none px-0  border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
+                            defaultValue={usuarios.nombre}/>
+                        </td>
+                        <td>
+                            <input type="text" 
+                            className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
+                            defaultValue={usuarios.apellido}/>
+                        </td>
+                        <td>
+                            <input type="text" 
+                            className='appearance-none px-0 border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
+                            defaultValue={usuarios.email}/>
+                        </td>
+                        <td>
+                            <input type="text"
+                            className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
+                             defaultValue={usuarios.cedula}/>
+                        </td>
+                        <td>
+                            <input type="text" 
+                            className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
+                            defaultValue={usuarios.telefono}/>
+                        </td>
+                    </>
+         ) :(
+            <>
+        <td className='md:p-2'>{usuarios.codigo}</td>
+        <td className='md:p-2'>{usuarios.nombre}</td>
+        <td className='md:p-2'>{usuarios.apellido}</td>
+        <td className='md:p-2'>{usuarios.email}</td>
+        <td className='md:p-2'>{usuarios.cedula}</td>
+        <td className='md:p-2'>{usuarios.telefono}</td>
+        </>
+            ) }
+        <td>
+            <div className='flex w-full justify-around '>
+                {edit ?(
+                     <i onClick={()=>setEdit(!edit)} 
+                     className='fas fa-check text-green-800 hover:text-white'/>
+                ):(
+                <i onClick={()=>setEdit(!edit)}
+                 className='fas fa-pencil-alt text-gray-700 hover:text-gray-900'/>
+                )}
+                <i className='fas fa-trash text-gray-700 hover:text-red-500'/>
+            </div>
+        </td>
+    </tr>
+        )
+    }
+
 
 const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=>{
     const form =useRef(null);
