@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React ,{ useEffect,useState,useRef}from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -97,7 +98,7 @@ const TablaUsuarios =({listaUsuarios })=>{
             <tbody className='text-gray-900 font-medium'>
                 {listaUsuarios.map((usuarios)=>{
                     return(
-                        <tr>
+                        <tr key={nanoid()}>
                         <td className='md:p-2'>{usuarios.codigo}</td>
                         <td className='md:p-2'>{usuarios.nombre}</td>
                         <td className='md:p-2'>{usuarios.apellido}</td>
