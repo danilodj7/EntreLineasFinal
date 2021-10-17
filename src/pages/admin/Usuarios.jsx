@@ -85,14 +85,36 @@ const Usuarios = () => {
 }
 
 const TablaUsuarios =({listaUsuarios })=>{
+    const [busqueda,setBusqueda] = useState('');
+    const [usuariosFiltrados, setVehiculosFiltrados] = useState(listaUsuarios);
+    useEffect(() => {
     
+        console.log("Busqueda",busqueda )
+        setVehiculosFiltrados(
+            listaUsuarios.filter((elemento)=>{
+                return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
+            })
+        );
+
+    }, [busqueda,listaUsuarios])
+
+
+
     useEffect(()=>{
         console.log('listado de usurarios', listaUsuarios)
     },[listaUsuarios])
    
     return (
     <div className='flex flex-col items-center justify-center w-full '>
+        <input 
+        value={busqueda}
+        onChange={e=>setBusqueda(e.target.value)}
+
+
+        placeholder='Buscar' className='border border-gray-400 mt-3 px-2 py-1 self-start rounded-md focus:outline-none focus:border-indigo-600 ' />
+        
         <h2 className='text-gray-900 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
+
         
         <table className='tabla'>
             <thead>
@@ -107,7 +129,7 @@ const TablaUsuarios =({listaUsuarios })=>{
                </tr>
             </thead>
             <tbody className='text-gray-900 font-medium'>
-                {listaUsuarios.map((usuarios)=>{
+                {usuariosFiltrados.map((usuarios)=>{
                     return(
                        <FilaUsuario usuarios={usuarios} key={nanoid()}/>
                     );   
