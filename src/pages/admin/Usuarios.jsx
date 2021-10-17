@@ -173,7 +173,7 @@ const TablaUsuarios =({listaUsuarios })=>{
                         <td>
                             <input type="text" 
                             className='appearance-none px-0  border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
-                            value={infoNuevoUsuario.nombre}
+                            value= {infoNuevoUsuario.nombre}
                             onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,nombre:e.target.value})}
                             />
                         </td>
