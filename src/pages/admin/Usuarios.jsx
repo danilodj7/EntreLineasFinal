@@ -116,7 +116,7 @@ const TablaUsuarios =({listaUsuarios })=>{
         <h2 className='text-gray-900 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
 
         
-        <table className='tabla'>
+        <table className='tabla hidden md:block'>
             <thead>
                <tr className='text-gray-100 '>
                    <th className='md:p-2'>Codigo</th>
@@ -137,6 +137,20 @@ const TablaUsuarios =({listaUsuarios })=>{
                     
             </tbody>
         </table>
+        <div className='flex flex-col w-full m-2 md:hidden'>
+                {usuariosFiltrados.map((el)=>{
+
+                    return <div className='bg-green-500 m-2 shadow-xl flex flex-col p-2 rounded-xl'>
+                        <span>{el.codigo}</span>
+                        <span>{el.nombre}</span>
+                        <span>{el.apellido}</span>
+                        <span>{el.email}</span>
+                        <span>{el.cedula}</span>
+                        <span>{el.telefono}</span>
+                    </div>
+                                
+        })}
+        </div>
        
         
     </div>
