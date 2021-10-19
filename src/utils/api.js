@@ -4,7 +4,7 @@ export const obtenerUsuarios = async(setUsuarios, setEjecutarConsulta =()=>{})=>
     const options ={method: 'GET', url: 'http://localhost:5000/usuarios' };
     await axios
     .request(options)
-    .request.then(function(response){
+    .then(function(response){
         setUsuarios(response.data);
 
     })

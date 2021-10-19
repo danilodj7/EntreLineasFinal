@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import axios from 'axios'
 import { Dialog,Tooltip } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css';
+import { obtenerUsuarios } from 'utils/api';
 
 
 const Usuarios = () => {
@@ -14,14 +15,16 @@ const Usuarios = () => {
 
     useEffect(() => {
        if (ejecutarconsulta){
-
+            obtenerUsuarios(setUsuarios,setEjecutarConsulta)
        }
     }, [ejecutarconsulta])
     
     useEffect(()=>{
-        //obtener lista de usuarios desde el fronted
-        setUsuarios(usuariosBackend)
-    },[])
+        if (mostrarTabla) {
+            setEjecutarConsulta(true)
+        }
+        
+    },[mostrarTabla])
     
     
     useEffect(()=>{
@@ -46,7 +49,7 @@ const Usuarios = () => {
             </button>
             </div>
            {mostrarTabla ?
-           (<TablaUsuarios listaUsuarios={usuarios} />
+           (<TablaUsuarios listaUsuarios={usuarios} setEjecutarConsulta={setEjecutarConsulta} />
            ):( 
            <FormularioCreacionUsuarios 
            
@@ -55,42 +58,29 @@ const Usuarios = () => {
             setUsuarios={setUsuarios}
             
             />
-           )}
-           
+           )}         
            <ToastContainer position="bottom-center" autoClose={5000} />
-           
-
         </div>
     )
 }
 
-const TablaUsuarios =({listaUsuarios })=>{
+const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
     const [busqueda,setBusqueda] = useState('');
-    const [usuariosFiltrados, setVehiculosFiltrados] = useState(listaUsuarios);
+    const [usuariosFiltrados, setUsuariosFiltrados] = useState(listaUsuarios);
     useEffect(() => {
-    
-        console.log("Busqueda",busqueda )
-        setVehiculosFiltrados(
+        setUsuariosFiltrados(
             listaUsuarios.filter((elemento)=>{
                 return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
             })
         );
 
     }, [busqueda,listaUsuarios])
-
-
-
-    useEffect(()=>{
-        console.log('listado de usurarios', listaUsuarios)
-    },[listaUsuarios])
    
     return (
     <div className='flex flex-col items-center justify-center w-full '>
         <input 
         value={busqueda}
         onChange={e=>setBusqueda(e.target.value)}
-
-
         placeholder='Buscar' className='border border-gray-400 mt-3 px-2 py-1 self-start rounded-md focus:outline-none focus:border-indigo-600 ' />
         
         <h2 className='text-gray-900 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
@@ -111,7 +101,9 @@ const TablaUsuarios =({listaUsuarios })=>{
             <tbody className='text-gray-900 font-medium'>
                 {usuariosFiltrados.map((usuarios)=>{
                     return(
-                       <FilaUsuario usuarios={usuarios} key={nanoid()}/>
+                       <FilaUsuario key={nanoid()} 
+                       usuarios={usuarios}
+                       setEjecutarConsulta={setEjecutarConsulta} />
                     );   
                 })}
                     
@@ -121,35 +113,77 @@ const TablaUsuarios =({listaUsuarios })=>{
                 {usuariosFiltrados.map((el)=>{
 
                     return <div className='bg-green-500 m-2 shadow-xl flex flex-col p-2 rounded-xl'>
-                        <span>{el.codigo}</span>
-                        <span>{el.nombre}</span>
-                        <span>{el.apellido}</span>
+                        <span>{el._id}</span>
+                        <span>{el.code}</span>
+                        <span>{el.name}</span>
+                        <span>{el.lastName}</span>
                         <span>{el.email}</span>
-                        <span>{el.cedula}</span>
-                        <span>{el.telefono}</span>
+                        <span>{el.idCard}</span>
+                        <span>{el.phone}</span>
                     </div>
                                 
         })}
         </div>
-       
-        
     </div>
     )
 }
 
-    const FilaUsuario =({usuarios})=>{
-        const [edit, setEdit] =useState(false) 
-        const[infoNuevoUsuario,setInfoNuevoUsuario] =useState({
-            codigo:usuarios.codigo,
-            nombre: usuarios.nombre,
-            apellido: usuarios.apellido,
+    const FilaUsuario =({usuarios,setEjecutarConsulta})=>{
+        const [edit, setEdit] = useState(false) 
+        const [openDialog, setOpenDialog] = useState(false)
+        const[infoNuevoUsuario,setInfoNuevoUsuario] = useState({
+            _id:usuarios._id,
+            code:usuarios.code,
+            name: usuarios.name,
+            lastName: usuarios.lastName,
             email:usuarios.email,
-            cedula:usuarios.cedula,
-            telefono:usuarios.telefono,
+            idCard:usuarios.idCard,
+            phone:usuarios.phone,
         })
-        const actualizarUsuarios=()=>{
-            console.log(infoNuevoUsuario)
+        
+        const actualizarUsuarios= async ()=>{
+            const options ={
+                method: 'PATCH',
+                url: `http://localhost:5000/usuarios/${usuarios._id}`,
+                headers: { 'Content-Type': 'application/json' },
+                data:{ ...infoNuevoUsuario},
+            }
+
+            await axios
+            .request(options)
+            .then(function(response){
+                console.log(response.data);
+                toast.success('Usuario modificado con éxito')
+                setEdit(false);
+                setEjecutarConsulta(true);
+            })
+            .catch(function(error){
+                toast.error('Error al modificar el usuario')
+                console.error(error)
+            })
         };
+
+        const eliminarUsuario = async () =>{
+            const options ={
+                method: 'DELETE',
+                url:'http://localhost:5000/usuarios/eliminar',
+                headers: { 'Content-Type': 'application/json' },
+                data:{id:usuarios._id},
+            }
+
+            await axios
+                .request(options)
+                .then(function(response){
+                    console.log(response.data);
+                    toast.success('Usuario eliminado con éxito');
+                    setEjecutarConsulta(true);
+                })
+                .catch(function(error){
+                    console.error(error)
+                    toast.error('Error al eliminar el usuario');                    
+                })
+                setOpenDialog(false);
+        }
         
         return(
             <tr >
@@ -157,25 +191,26 @@ const TablaUsuarios =({listaUsuarios })=>{
                     edit?(
 
                     <>
+                        <td>{infoNuevoUsuario._id}</td>
                         <td>
                             <input type="text" 
                              className='appearance-none px-0  border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
-                            value={infoNuevoUsuario.codigo}
-                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,codigo:e.target.value})}
+                            value={infoNuevoUsuario.code}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,code:e.target.value})}
                             />
                         </td>
                         <td>
                             <input type="text" 
                             className='appearance-none px-0  border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
-                            value= {infoNuevoUsuario.nombre}
-                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,nombre:e.target.value})}
+                            value= {infoNuevoUsuario.name}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,name:e.target.value})}
                             />
                         </td>
                         <td>
                             <input type="text" 
                             className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
-                            value={infoNuevoUsuario.apellido}
-                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,apellido:e.target.value})}
+                            value={infoNuevoUsuario.lastName}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,lastName:e.target.value})}
                             />
                          </td>
                         <td>
@@ -188,41 +223,80 @@ const TablaUsuarios =({listaUsuarios })=>{
                         <td>
                             <input type="text"
                             className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
-                            value={infoNuevoUsuario.cedula}
-                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,cedula:e.target.value})}
+                            value={infoNuevoUsuario.idCard}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,idCard:e.target.value})}
                             />
                         </td>
                         <td>
                             <input type="text" 
                             className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
-                            value={infoNuevoUsuario.telefono}
-                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,telefono:e.target.value})}
+                            value={infoNuevoUsuario.phone}
+                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,phone:e.target.value})}
                             />
                         </td>
                     </>
          ) :(
             <>
-        <td className='md:p-1'>{usuarios.codigo}</td>
-        <td className='md:p-1'>{usuarios.nombre}</td>
-        <td className='md:p-1'>{usuarios.apellido}</td>
+        <td className='md:p-1'>{usuarios._id.slice(20)}</td>
+        <td className='md:p-1'>{usuarios.code}</td>
+        <td className='md:p-1'>{usuarios.name}</td>
+        <td className='md:p-1'>{usuarios.lastName}</td>
         <td className='md:p-1'>{usuarios.email}</td>
-        <td className='md:p-1'>{usuarios.cedula}</td>
-        <td className='md:p-1'>{usuarios.telefono}</td>
+        <td className='md:p-1'>{usuarios.idCard}</td>
+        <td className='md:p-1'>{usuarios.phone}</td>
         </>
             ) }
         <td>
             <div className='flex w-full justify-around '>
                 {edit ?(
-                    
-                     <i onClick={()=>actualizarUsuarios()} 
+                    <>
+                    <Tooltip title='Confirmar Edición' arrow>
+                    <i onClick={()=>actualizarUsuarios()} 
                      className='fas fa-check text-green-800 hover:text-white'/>
-                     
+                    </Tooltip>
+                     <Tooltip title='Cancelar Edición' arrow>
+                        <i 
+                            onClick={()=>setEdit(!edit)}
+                            className='fas fa-ban text-yellow-700 hover:text-yellow-500'
+                        />
+                     </Tooltip>
+                     </>
                 ):(
-                <i onClick={()=>setEdit(!edit)}
-                 className='fas fa-pencil-alt text-gray-700 hover:text-gray-900'/>
-                )}
-                <i  className='fas fa-trash text-gray-700 hover:text-red-500'/>
+                <>
+                <Tooltip title='Editar Usuario' arrow>                        
+                    <i onClick={()=>setEdit(!edit)}
+                    className='fas fa-pencil-alt text-gray-700 hover:text-gray-900'/>
+                </Tooltip>
+                <Tooltip title='Eliminar Usuario' arrow>  
+                    <i
+                        onClick={()=>setOpenDialog(true)}
+                        className='fas fa-trash text-red-700 hover:text-red-500'
+                    />
+                </Tooltip>
+                </>
+                )}      
             </div>
+            <Dialog open={openDialog}>
+            <div className='p-8 flex flex-col'>
+            <h1 className='text-gray-900 text-2xl font-bold'>
+                ¿Esta seguro que quiere eliminar el usuario?
+            </h1>
+            <div className='flex w-full items-center justify-center my-4'>
+                <button
+                    onClick={()=>eliminarUsuario()}
+                    className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'
+                >
+                    Sí
+                </button>
+                <button
+                    onClick={()=>setOpenDialog(false)}
+                    className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'
+                >
+                    No
+                </button>
+              </div>
+            </div>
+            </Dialog>
         </td>
     </tr>
         )
@@ -232,7 +306,7 @@ const TablaUsuarios =({listaUsuarios })=>{
 const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=>{
     const form =useRef(null);
          //trabajar el hook useref para user los nombres de los inputs como variables
-        const submitForm =(e)=>{
+        const submitForm = async (e)=>{
             e.preventDefault();
             const fd = new FormData(form.current)
 
@@ -241,10 +315,33 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
                 nuevoUsuario[key]=value;
             }); //se crea el objeto fd 
 
-            setMostrarTabla(true);
-            setUsuarios([...listaUsuarios,nuevoUsuario]);
-            toast.success('Vehiculo agregado con éxito');
-            
+            const options={
+                method: 'POST',
+                url:'http://localhost:5000/usuarios/nuevo',
+                headers: { 'Content-Type': 'application/json' },
+                data:{
+                    code: nuevoUsuario.code,
+                    name: nuevoUsuario.name,
+                    lastName:nuevoUsuario.lastName,
+                    email:nuevoUsuario.email,
+                    idCard:nuevoUsuario.idCard,
+                    phone:nuevoUsuario.phone
+                },
+            }
+
+            await axios
+                .request(options)
+                .then(function(response){
+                    console.log(response.data)
+                    toast.success('Ususario Registrado con exito')
+
+                })
+                .catch(function(error){
+                    console.error(error);
+                    toast.error('Error al crear un usuario')
+                })
+                
+                setMostrarTabla(true);           
         };
     return (
         <div>
