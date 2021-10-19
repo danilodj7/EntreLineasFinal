@@ -3,6 +3,7 @@ import axios from "axios";
 export const obtenerUsuarios = async(setUsuarios, setEjecutarConsulta =()=>{})=>{
     const options ={method: 'GET', url: 'http://localhost:5000/usuarios' };
     await axios
+    .request(options)
     .request.then(function(response){
         setUsuarios(response.data);
 
@@ -10,5 +11,6 @@ export const obtenerUsuarios = async(setUsuarios, setEjecutarConsulta =()=>{})=>
     .catch(function(error){
         console.error(error)
     })
-    setEjecutarConsulta(false)
+   
+    setEjecutarConsulta(false) 
 }
