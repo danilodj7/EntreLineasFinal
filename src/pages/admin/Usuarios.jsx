@@ -1,30 +1,10 @@
-import { nanoid } from 'nanoid';
 import React ,{ useEffect,useState,useRef}from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import { nanoid } from 'nanoid';
+import axios from 'axios'
+import { Dialog,Tooltip } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-const usuariosBackend =[
-    {
-        codigo:"27098",
-        nombre:"pepe",
-        apellido:"almeja",
-        email:"pepe@gmail.com",
-        cedula:278176546,
-        telefono:"27089767"
-
-    },
-
-    {
-        codigo:"27099",
-        nombre:"carlos",
-        apellido:"almejados",
-        email:"carlos@gmail.com",
-        cedula:278176547,
-        telefono:"3306564535"
-
-    },
-]
 
 const Usuarios = () => {
     const [mostrarTabla,setMostrarTabla] = useState(true)
