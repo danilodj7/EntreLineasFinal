@@ -89,6 +89,7 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
         <table className='tabla hidden md:block'>
             <thead>
                <tr className='text-gray-100 '>
+                   <th className='md:p-2'>ID</th>
                    <th className='md:p-2'>Codigo</th>
                    <th className='md:p-2'>Nombre</th>
                    <th className='md:p-2'>Apellido</th>
@@ -237,7 +238,7 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
                     </>
          ) :(
             <>
-        <td className='md:p-1'>{usuarios._id.slice(20)}</td>
+        <td className='md:p-1'>{usuarios._id.slice(19)}</td>
         <td className='md:p-1'>{usuarios.code}</td>
         <td className='md:p-1'>{usuarios.name}</td>
         <td className='md:p-1'>{usuarios.lastName}</td>
