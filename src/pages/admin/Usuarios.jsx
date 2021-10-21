@@ -145,7 +145,7 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
         const actualizarUsuarios= async ()=>{
             const options ={
                 method: 'PATCH',
-                url: `http://localhost:5000/usuarios/${usuarios._id}`,
+                url: `http://localhost:5000/usuarios/${usuarios._id}/`,
                 headers: { 'Content-Type': 'application/json' },
                 data:{ ...infoNuevoUsuario},
             }
@@ -346,27 +346,27 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
         };
     return (
         <div>
-         <h2 className='py-2 text-gray-200 font-black mb-4 text-center'>Creacion de Usuarios</h2>
+         <h2 className='py-2 text-gray-800 font-black mb-4 text-center'>Creacion de Usuarios</h2>
         <form ref={form} onSubmit={submitForm} className='grid grid-cols-1 justify-center'>
     
-           <label  htmlFor="codigo" className='text-gray-200 font-extrabold'>
+           <label  htmlFor="codigo" className='text-gray-800 font-extrabold'>
                Codigo del Usuario
             <input 
              name='codigo'   
              type="text" 
-             className='appearance-none px-16  border  border-gray-300 rounded-md py-2 ml-6 text-gray-800 text-center focus:outline-none' 
+             className='appearance-none px-16  border  border-gray-400 rounded-md py-2 ml-6 text-gray-800 text-center focus:outline-none' 
              placeholder='Codigo del Usuario'
              required
             
              />
             </label>
             
-            <label htmlFor="nombre" className='text-gray-200 font-extrabold '>
+            <label htmlFor="nombre" className='text-gray-800 font-extrabold '>
                 Nombre del Usuario
             <input  
             name='nombre'
             type="text" 
-            className='appearance-none px-16 mt-4 border border-gray-100 rounded-md py-2 ml-4 text-gray-800 text-center focus:outline-none' 
+            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-4 text-gray-800 text-center focus:outline-none' 
             placeholder='Nombre del Usuario'
             required
             
@@ -374,7 +374,7 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             
             </label>
 
-            <label htmlFor="apellido" className='text-gray-200 font-extrabold '> 
+            <label htmlFor="apellido" className='text-gray-800 font-extrabold '> 
             Apellido del Usuario
             <input 
             name='apellido'
@@ -387,7 +387,7 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             
             </label>
 
-            <label htmlFor="email" className='text-gray-200 font-extrabold '>
+            <label htmlFor="email" className='text-gray-800 font-extrabold '>
             Email del Usuario
             <input 
             name='email'
@@ -401,7 +401,7 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             </label>
 
 
-            <label htmlFor="cedula" className='text-gray-200 font-extrabold '>
+            <label htmlFor="cedula" className='text-gray-800 font-extrabold '>
                 Cedula del Usuario
             <input 
             name='cedula'
@@ -413,7 +413,7 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             
             </label>
             
-            <label htmlFor="telefono" className='text-gray-200 font-extrabold '>
+            <label htmlFor="telefono" className='text-gray-800 font-extrabold '>
             Telefono del Usuario
             <input 
             name='telefono'
