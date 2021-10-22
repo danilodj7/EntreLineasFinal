@@ -1,11 +1,10 @@
 import React ,{ useEffect,useState,useRef}from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { nanoid } from 'nanoid';
-import axios from 'axios'
+
 import { Dialog,Tooltip } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css';
-import { obtenerUsuarios } from 'utils/api';
-
+import { obtenerUsuarios,crearUsuarios,editarUsuarios,eliminarUsuarios } from 'utils/api';
 
 const Usuarios = () => {
     const [mostrarTabla,setMostrarTabla] = useState(true)
@@ -15,7 +14,14 @@ const Usuarios = () => {
 
     useEffect(() => {
        if (ejecutarconsulta){
-            obtenerUsuarios(setUsuarios,setEjecutarConsulta)
+            obtenerUsuarios(
+                (response)=>{
+                    setUsuarios(response.data)
+                },
+                (error)=>{
+                    console.log(error)
+                })
+            setEjecutarConsulta(false) 
        }
     }, [ejecutarconsulta])
     
@@ -143,47 +149,46 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
         })
         
         const actualizarUsuarios= async ()=>{
-            const options ={
-                method: 'PATCH',
-                url: `http://localhost:5000/usuarios/${usuarios._id}/`,
-                headers: { 'Content-Type': 'application/json' },
-                data:{ ...infoNuevoUsuario},
-            }
-
-            await axios
-            .request(options)
-            .then(function(response){
+            
+            await editarUsuarios(
+            usuarios._id,
+            {
+            code: infoNuevoUsuario.code,
+            name: infoNuevoUsuario.name,
+            lastName: infoNuevoUsuario.lastName,
+            email: infoNuevoUsuario.email,
+            idCard:infoNuevoUsuario.idCard,
+            phone:infoNuevoUsuario.phone
+            },
+            (response)=>{
                 console.log(response.data);
                 toast.success('Usuario modificado con éxito')
                 setEdit(false);
                 setEjecutarConsulta(true);
-            })
-            .catch(function(error){
+            },
+            (error)=>{
+                
                 toast.error('Error al modificar el usuario')
                 console.error(error)
             })
-        };
-
-        const eliminarUsuario = async () =>{
-            const options ={
-                method: 'DELETE',
-                url:'http://localhost:5000/usuarios/eliminar',
-                headers: { 'Content-Type': 'application/json' },
-                data:{id:usuarios._id},
             }
+        const eliminarUsuario = async () =>{
+           
+           
+           await eliminarUsuarios(
+            usuarios._id,
+            (response)=>{
+                console.log(response.data);
+                toast.success('Usuario eliminado con éxito');
+                setEjecutarConsulta(true);
+            },
+            (error)=>{
+                console.error(error)
+             toast.error('Error al eliminar el usuario');   
 
-            await axios
-                .request(options)
-                .then(function(response){
-                    console.log(response.data);
-                    toast.success('Usuario eliminado con éxito');
-                    setEjecutarConsulta(true);
-                })
-                .catch(function(error){
-                    console.error(error)
-                    toast.error('Error al eliminar el usuario');                    
-                })
-                setOpenDialog(false);
+            }
+            )
+            setOpenDialog(false);
         }
         
         return(
@@ -316,33 +321,28 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
                 nuevoUsuario[key]=value;
             }); //se crea el objeto fd 
 
-            const options={
-                method: 'POST',
-                url:'http://localhost:5000/usuarios/nuevo',
-                headers: { 'Content-Type': 'application/json' },
-                data:{
-                    code: nuevoUsuario.code,
-                    name: nuevoUsuario.name,
-                    lastName:nuevoUsuario.lastName,
-                    email:nuevoUsuario.email,
-                    idCard:nuevoUsuario.idCard,
-                    phone:nuevoUsuario.phone
-                },
+ 
+          await  crearUsuarios(
+              {
+                code: nuevoUsuario.code,
+                name: nuevoUsuario.name,
+                lastName:nuevoUsuario.lastName,
+                email:nuevoUsuario.email,
+                idCard:nuevoUsuario.idCard,
+                phone:nuevoUsuario.phone
+            },
+            (response)=>{
+                console.log(response.data)
+                toast.success('Usuario agregado con exito')
+            },
+            (error)=>{
+                console.error(error)
+                toast.error('Error creando un Usuario')
             }
+            
+            )   
 
-            await axios
-                .request(options)
-                .then(function(response){
-                    console.log(response.data)
-                    toast.success('Ususario Registrado con exito')
-
-                })
-                .catch(function(error){
-                    console.error(error);
-                    toast.error('Error al crear un usuario')
-                })
-                
-                setMostrarTabla(true);           
+               setMostrarTabla(true);           
         };
     return (
         <div>
@@ -352,7 +352,7 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
            <label  htmlFor="codigo" className='text-gray-800 font-extrabold'>
                Codigo del Usuario
             <input 
-             name='codigo'   
+             name='code'   
              type="text" 
              className='appearance-none px-16  border  border-gray-400 rounded-md py-2 ml-6 text-gray-800 text-center focus:outline-none' 
              placeholder='Codigo del Usuario'
@@ -364,7 +364,7 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             <label htmlFor="nombre" className='text-gray-800 font-extrabold '>
                 Nombre del Usuario
             <input  
-            name='nombre'
+            name='name'
             type="text" 
             className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-4 text-gray-800 text-center focus:outline-none' 
             placeholder='Nombre del Usuario'
@@ -377,7 +377,7 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             <label htmlFor="apellido" className='text-gray-800 font-extrabold '> 
             Apellido del Usuario
             <input 
-            name='apellido'
+            name='lastName'
             type="text" 
             className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-4 text-gray-800 text-center  focus:outline-none' 
             placeholder='Apellido del Usuario'
@@ -404,7 +404,7 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             <label htmlFor="cedula" className='text-gray-800 font-extrabold '>
                 Cedula del Usuario
             <input 
-            name='cedula'
+            name='idCard'
             type="number" 
             className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-7 text-gray-800 text-center  focus:outline-none' 
             placeholder='Cedula del Usuario'
@@ -416,7 +416,7 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             <label htmlFor="telefono" className='text-gray-800 font-extrabold '>
             Telefono del Usuario
             <input 
-            name='telefono'
+            name='phone'
             type="text" 
             className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-3 text-gray-800 text-center  focus:outline-none' 
             placeholder='Telefono' 
