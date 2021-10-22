@@ -13,70 +13,34 @@ const Ventas = () => {
      const [productos,setProductos] =useState([])
      const [productosSeleccionados,setProductosSeleccionados]=useState([])
 
-
-     useEffect(()=>{
-
-     },[])
-     
-     useEffect(()=>{
-          console.log("productos seleccionados",setProductosSeleccionados)
-     },[productosSeleccionados])
-     
-     const agregarNuevoProducto =()=>{
-          setProductosSeleccionados([...productosSeleccionados,DropdownProductos]);
-     }
-
-
-
      useEffect(() => {
-          const fetchVendedores = async()=>{
-               await obtenerUsuarios(
-                    (response)=>{
-                         setVendedores(response.data)
-                    },
-                    (error)=>{console.error(error)}
-                    )
-          }
-
-          const fetchProductos = async () =>{
-               await obtenerProductos(
-              (response)=>{
-                    setProductos(response.data)
-               },
-               (error)=>{
-                    console.error(error)
-               })
-          }
-         
-          fetchVendedores()
-          fetchProductos()
-          
-     }, [])
-
-     const submitForm = async (e)=>{
-          e.preventDefault();
-          const fd = new FormData(form.current)
-
-          const formData={};
-          fd.forEach((value,key)=>{
-              formData[key]=value;
-          }); 
-          const infoconsolidada= {
-               valor:formData.valor,
-               vendedor: vendedores.filter(v=>v._id === formData.vendedor)[0],
-               producto: productos.filter(v=>v._id === formData.producto)[0],
-          }
-          console.log(infoconsolidada)
-          await crearVenta(
-               infoconsolidada,
-               (response)=>{
-                    console.log(response.data)
-               },
-               (error)=>{
-                    console.error(error)
-               }
-               );
-     }
+          const fetchVendores = async () => {
+            await obtenerUsuarios(
+              (response) => {
+                setVendedores(response.data);
+              },
+              (error) => {
+                console.error(error);
+              }
+            );
+          };
+          const fetchProductos = async () => {
+            await obtenerProductos(
+              (response) => {
+                setProductos(response.data);
+              },
+              (error) => {
+                console.error(error);
+              }
+            );
+          };
+      
+          fetchVendores();
+          fetchProductos();
+        }, []);
+     
+     
+     
 
      
   return (
