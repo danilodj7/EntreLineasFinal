@@ -83,3 +83,16 @@ export const eliminarProductos = async (id,successCallback,errorCallback)=>{
 }
 
 
+//////////////////////////////////////////////////////-----------------
+
+export const crearVenta = async(data, successCallback,errorCallback)=>{
+    const options ={
+        
+        method: 'POST',
+        url:'http://localhost:5000/ventas/',
+        headers: { 'Content-Type': 'application/json' }, //Estoy enviando informacion en formato Json
+        data
+    
+}
+await axios.request(options).then(successCallback).catch(errorCallback);
+}
