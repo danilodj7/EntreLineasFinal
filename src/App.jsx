@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css'
 import {DarkModeContext } from 'context/darkMode'
 import { useEffect, useState } from 'react/cjs/react.development';
+import { Auth0Provider } from "@auth0/auth0-react";
 
 function App() {
   const [darkMode,setDarkMode] =useState(false)
@@ -21,6 +22,11 @@ function App() {
     console.log('Modo dark',darkMode)
   },[darkMode])
   return (
+    <Auth0Provider
+    domain="ventas-productoscar.us.auth0.com"
+    clientId="aERvZLjUzLbmGLTwhJcc8YG35arE42tH"
+    redirectUri={window.location.origin}
+    >
     <div className='App'>
       <DarkModeContext.Provider value={{darkMode,setDarkMode}}> 
       <Router>  
@@ -83,6 +89,7 @@ function App() {
       </DarkModeContext.Provider>
     
     </div>
+    </Auth0Provider>
   );
 }
 
