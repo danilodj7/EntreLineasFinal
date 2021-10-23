@@ -2,11 +2,13 @@ import useActiveRoute from 'hooks/useActiveRoute'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ImagenLogo from './ImagenLogo'
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
 
 const Sidebar = () => {
+    const { logout } = useAuth0();
     return (
         <div className=' hidden md:flex md:w-60 flex-col  bg-gray-800 p-3 text-center text-gray-100 '>
             <Link to='/admin'>
@@ -19,7 +21,7 @@ const Sidebar = () => {
           <Ruta ruta='/admin/usuarios' nombre='Usuarios'/>
           <Ruta ruta='/admin/clientes' nombre='Clientes'/>
           <div className='mt-52'>
-          <Ruta ruta='/admin/cerrar sesion' nombre='Cerrar Sesion' />
+          <button onClick={() => logout({ returnTo: window.location.origin })}>Cerrar Sesión</button>
           </div>
            
         </div>

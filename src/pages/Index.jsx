@@ -10,7 +10,7 @@ const Index = () => {
 
         <div className={`flex h-full bg-gray-${darkMode ?'800':'50'}`}>
             
-           Contenido del index
+           Contenido del index hola
         </div>
     )
 }

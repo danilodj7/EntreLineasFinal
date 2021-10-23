@@ -1,9 +1,11 @@
+import PrivateRouter from 'components/PrivateRouter'
 import Sidebar from 'components/Sidebar'
 import SideBarResponsive from 'components/SideBarResponsive'
 import React from 'react'
 
 const PrivateLayout = ({children}) => {
     return (
+        <PrivateRouter>
         <div className='flex w-screen h-screen '>
             <div className='flex flex-col md:flex-row flex-nowrap  h-full w-full'>
             <Sidebar/>
@@ -13,6 +15,7 @@ const PrivateLayout = ({children}) => {
             </main>
             </div>
         </div>
+        </PrivateRouter>
     )
 }
 
