@@ -10,9 +10,11 @@ const PublicLayout = ({children}) => {
 
         <div className="flex flex-col justify-between h-screen"> 
             <NavBar />
-            <main id='bg-imagen' className='h-full overflow-y-scroll  '>{children}</main>
+            <main className='h-full overflow-y-scroll  '>{children}</main>
             <Footer  />
-        </div>
+      </div>
+    
+        
     )
 }
 
