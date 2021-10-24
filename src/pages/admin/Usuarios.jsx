@@ -12,16 +12,20 @@ const Usuarios = () => {
     const [ejecutarconsulta,setEjecutarConsulta]=useState(true);
 
     useEffect(() => {
-       if (ejecutarconsulta){
-            obtenerUsuarios(
+        const fetchUsuarios= async ()=>{
+        await obtenerUsuarios(
                 (response)=>{
                     setUsuarios(response.data)
+                    setEjecutarConsulta(false) 
                 },
                 (error)=>{
                     console.log(error)
-                })
-            setEjecutarConsulta(false) 
-       }
+                }
+             )
+            }
+            if (ejecutarconsulta) {
+                fetchUsuarios()
+            }
     }, [ejecutarconsulta])
     
     useEffect(()=>{
@@ -118,7 +122,7 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
         <div className='flex flex-col w-full m-2 md:hidden'>
                 {usuariosFiltrados.map((el)=>{
 
-                    return <div className='bg-green-500 m-2 shadow-xl flex flex-col p-2 rounded-xl'>
+                    return <div  key={nanoid()}  className='bg-green-500 m-2 shadow-xl flex flex-col p-2 rounded-xl'>
                         <span>{el._id}</span>
                         <span>{el.code}</span>
                         <span>{el.name}</span>

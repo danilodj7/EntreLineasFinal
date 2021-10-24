@@ -25,7 +25,8 @@ function App() {
     <Auth0Provider
     domain="ventas-productoscar.us.auth0.com"
     clientId="aERvZLjUzLbmGLTwhJcc8YG35arE42tH"
-    redirectUri={window.location.origin}
+    redirectUri="http://localhost:3000/admin"
+    audience="api-autenticacion-productos-carros"
     >
     <div className='App'>
       <DarkModeContext.Provider value={{darkMode,setDarkMode}}> 

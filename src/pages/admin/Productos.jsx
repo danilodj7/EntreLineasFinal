@@ -5,22 +5,33 @@ import { Dialog,Tooltip } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css';
 import { obtenerProductos,crearProductos,editarProductos,eliminarProductos } from 'utils/api';
 
+
+
 const Productos = () => {
     const [mostrarTabla,setMostrarTabla] = useState(true)
     const [productos,setProductos]= useState([])
     const [textoBoton , setTextoBoton]=useState('Crear Nuevo Producto')
     const [ejecutarconsulta,setEjecutarConsulta]=useState(true);
+    
 
     useEffect(() => {
-       if (ejecutarconsulta){
-            obtenerProductos(
+        const fetchProductos = async ()=>{
+            
+          await  obtenerProductos(
                 (response)=>{
                     setProductos(response.data)
+                    setEjecutarConsulta(false) 
+                  
                 },
                 (error)=>{
                     console.log(error)
+                    
                 })
-            setEjecutarConsulta(false) 
+        }
+       
+            
+        if (ejecutarconsulta){   
+            fetchProductos()
        }
     }, [ejecutarconsulta])
     
@@ -54,7 +65,10 @@ const Productos = () => {
             </button>
             </div>
            {mostrarTabla ?
-           (<TablaProductos listaProductos={productos} setEjecutarConsulta={setEjecutarConsulta} />
+           (<TablaProductos 
+                
+                listaProductos={productos} 
+                setEjecutarConsulta={setEjecutarConsulta} />
            ):( 
            <FormularioCreacionProductos 
            
@@ -69,7 +83,7 @@ const Productos = () => {
     )
 }
 
-const TablaProductos =({listaProductos,setEjecutarConsulta })=>{
+const TablaProductos =({ listaProductos,setEjecutarConsulta })=>{
     const [busqueda,setBusqueda] = useState('');
     const [productosFiltrados, setProductosFiltrados] = useState(listaProductos);
     useEffect(() => {
@@ -88,9 +102,7 @@ const TablaProductos =({listaProductos,setEjecutarConsulta })=>{
         onChange={e=>setBusqueda(e.target.value)}
         placeholder='Buscar' className='border border-gray-400 mt-3 px-2 py-1 self-start rounded-md focus:outline-none focus:border-indigo-600 ' />
         
-        <h2 className='text-gray-900 text-center md:py-5 font-extrabold'>Tabla de Productos</h2>
-
-        
+        <h2 className='text-gray-900 text-center md:py-5 font-extrabold'>Tabla de Productos</h2>      
         <table className='tabla hidden md:block'>
             <thead>
                <tr className='text-gray-100 '>
@@ -111,11 +123,11 @@ const TablaProductos =({listaProductos,setEjecutarConsulta })=>{
                 })}
                     
             </tbody>
-        </table>
+        </table>        
         <div className='flex flex-col w-full m-2 md:hidden'>
                 {productosFiltrados.map((el)=>{
 
-                    return <div className='bg-green-500 m-2 shadow-xl flex flex-col p-2 rounded-xl'>
+                    return <div key={nanoid()}  className='bg-green-500 m-2 shadow-xl flex flex-col p-2 rounded-xl'>
                         <span>{el._id}</span>
                         <span>{el.company}</span>
                         <span>{el.nameProduct}</span>
