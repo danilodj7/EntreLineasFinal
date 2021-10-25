@@ -98,13 +98,10 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
         <table className='tabla hidden md:block'>
             <thead>
                <tr className='text-gray-100 '>
-                   <th className='md:p-2'>ID</th>
-                   <th className='md:p-2'>Codigo</th>
-                   <th className='md:p-2'>Nombre</th>
-                   <th className='md:p-2'>Apellido</th>
+                   <th className='md:p-2'>ID</th>              
+                   <th className='md:p-2'>Nombre</th>            
                    <th className='md:p-2'>Email</th>
-                   <th className='md:p-2'>Cedula</th>
-                   <th className='md:p-2'>Telefono</th>
+                   <th className='md:p-2'>Roles</th>
                    <th className='md:p-2'>Acciones</th>
                </tr>
             </thead>
@@ -121,15 +118,10 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
         </table>
         <div className='flex flex-col w-full m-2 md:hidden'>
                 {usuariosFiltrados.map((el)=>{
-
                     return <div  key={nanoid()}  className='bg-green-500 m-2 shadow-xl flex flex-col p-2 rounded-xl'>
                         <span>{el._id}</span>
-                        <span>{el.code}</span>
                         <span>{el.name}</span>
-                        <span>{el.lastName}</span>
                         <span>{el.email}</span>
-                        <span>{el.idCard}</span>
-                        <span>{el.phone}</span>
                     </div>
                                 
         })}
@@ -138,17 +130,16 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
     )
 }
 
+
+
+
     const FilaUsuario =({usuarios,setEjecutarConsulta})=>{
         const [edit, setEdit] = useState(false) 
         const [openDialog, setOpenDialog] = useState(false)
         const[infoNuevoUsuario,setInfoNuevoUsuario] = useState({
             _id:usuarios._id,
-            code:usuarios.code,
             name: usuarios.name,
-            lastName: usuarios.lastName,
             email:usuarios.email,
-            idCard:usuarios.idCard,
-            phone:usuarios.phone,
         })
         
         const actualizarUsuarios= async ()=>{
@@ -156,12 +147,11 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
             await editarUsuarios(
             usuarios._id,
             {
-            code: infoNuevoUsuario.code,
+           
             name: infoNuevoUsuario.name,
-            lastName: infoNuevoUsuario.lastName,
+     
             email: infoNuevoUsuario.email,
-            idCard:infoNuevoUsuario.idCard,
-            phone:infoNuevoUsuario.phone
+   
             },
             (response)=>{
                 console.log(response.data);
@@ -201,13 +191,7 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
 
                     <>
                         <td>{infoNuevoUsuario._id}</td>
-                        <td>
-                            <input type="text" 
-                             className='appearance-none px-0  border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
-                            value={infoNuevoUsuario.code}
-                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,code:e.target.value})}
-                            />
-                        </td>
+                       
                         <td>
                             <input type="text" 
                             className='appearance-none px-0  border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
@@ -215,13 +199,7 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
                             onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,name:e.target.value})}
                             />
                         </td>
-                        <td>
-                            <input type="text" 
-                            className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
-                            value={infoNuevoUsuario.lastName}
-                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,lastName:e.target.value})}
-                            />
-                         </td>
+                       
                         <td>
                             <input type="text" 
                             className='appearance-none px-0 border border-gray-400 rounded-md  text-gray-800 text-center  focus:outline-none' 
@@ -229,30 +207,17 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
                             onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,email:e.target.value})}
                             />
                         </td>
-                        <td>
-                            <input type="text"
-                            className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
-                            value={infoNuevoUsuario.idCard}
-                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,idCard:e.target.value})}
-                            />
-                        </td>
-                        <td>
-                            <input type="text" 
-                            className='appearance-none px-0  border border-gray-400 rounded-md text-gray-800 text-center  focus:outline-none' 
-                            value={infoNuevoUsuario.phone}
-                            onChange={(e)=>setInfoNuevoUsuario({...infoNuevoUsuario,phone:e.target.value})}
-                            />
-                        </td>
                     </>
          ) :(
             <>
         <td className='md:p-1'>{usuarios._id.slice(19)}</td>
-        <td className='md:p-1'>{usuarios.code}</td>
+       
         <td className='md:p-1'>{usuarios.name}</td>
-        <td className='md:p-1'>{usuarios.lastName}</td>
+      
         <td className='md:p-1'>{usuarios.email}</td>
-        <td className='md:p-1'>{usuarios.idCard}</td>
-        <td className='md:p-1'>{usuarios.phone}</td>
+        <td>
+           <RolesUsuario usuarios ={usuarios}/>
+        </td>
         </>
             ) }
         <td>
@@ -311,7 +276,30 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
         )
     }
 
+    const RolesUsuario =({usuarios})=>{
+        const [rol, setRol] = useState(usuarios.rol);
+        useEffect(() => {
+           const editUsuariosRol =async()=>{
+                await editarUsuarios (usuarios._id,{rol},
+                    (res)=>{console.log(res)},
+                    (err)=>{console.error(err)}
+                    )
+           }
+           if (usuarios.rol !== rol) {
+            editUsuariosRol();
+           }
 
+        }, [rol,usuarios])
+
+        return(
+            <select value={rol} onChange={(e)=> setRol(e.target.value)} >
+                <option value="admin">Admin</option>
+                <option value="vendedor">Vendedor</option>
+                <option value="inactivo">Inactivo</option>
+            </select>
+            
+        )
+    }
 const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=>{
     const form =useRef(null);
          //trabajar el hook useref para user los nombres de los inputs como variables
@@ -323,16 +311,11 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             fd.forEach((value,key)=>{
                 nuevoUsuario[key]=value;
             }); //se crea el objeto fd 
-
- 
           await  crearUsuarios(
               {
-                code: nuevoUsuario.code,
-                name: nuevoUsuario.name,
-                lastName:nuevoUsuario.lastName,
+               
+                name: nuevoUsuario.name,   
                 email:nuevoUsuario.email,
-                idCard:nuevoUsuario.idCard,
-                phone:nuevoUsuario.phone
             },
             (response)=>{
                 console.log(response.data)
@@ -344,26 +327,12 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             }
             
             )   
-
                setMostrarTabla(true);           
         };
     return (
         <div>
          <h2 className='py-2 text-gray-800 font-black mb-4 text-center'>Creacion de Usuarios</h2>
         <form ref={form} onSubmit={submitForm} className='grid grid-cols-1 justify-center'>
-    
-           <label  htmlFor="codigo" className='text-gray-800 font-extrabold'>
-               Codigo del Usuario
-            <input 
-             name='code'   
-             type="text" 
-             className='appearance-none px-16  border  border-gray-400 rounded-md py-2 ml-6 text-gray-800 text-center focus:outline-none' 
-             placeholder='Codigo del Usuario'
-             required
-            
-             />
-            </label>
-            
             <label htmlFor="nombre" className='text-gray-800 font-extrabold '>
                 Nombre del Usuario
             <input  
@@ -376,20 +345,6 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             />
             
             </label>
-
-            <label htmlFor="apellido" className='text-gray-800 font-extrabold '> 
-            Apellido del Usuario
-            <input 
-            name='lastName'
-            type="text" 
-            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-4 text-gray-800 text-center  focus:outline-none' 
-            placeholder='Apellido del Usuario'
-            required
-            
-            />
-            
-            </label>
-
             <label htmlFor="email" className='text-gray-800 font-extrabold '>
             Email del Usuario
             <input 
@@ -397,37 +352,9 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
             type="email" 
             className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-10 text-gray-800 text-center  focus:outline-none' 
             placeholder='Correo del Usuario'
-            required
-           
-            />
-            
+            required         
+            />           
             </label>
-
-
-            <label htmlFor="cedula" className='text-gray-800 font-extrabold '>
-                Cedula del Usuario
-            <input 
-            name='idCard'
-            type="number" 
-            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-7 text-gray-800 text-center  focus:outline-none' 
-            placeholder='Cedula del Usuario'
-            required
-            />
-            
-            </label>
-            
-            <label htmlFor="telefono" className='text-gray-800 font-extrabold '>
-            Telefono del Usuario
-            <input 
-            name='phone'
-            type="text" 
-            className='appearance-none px-16 mt-4 border border-gray-400 rounded-md py-2 ml-3 text-gray-800 text-center  focus:outline-none' 
-            placeholder='Telefono' 
-            required
-            />
-            
-            </label>
-
             <button 
             type='submit'
             className='mt-4 bg-green-500 px-36  rounded-md py-2 hover:bg-green-600'

@@ -46,7 +46,7 @@ const Ruta =({icono,ruta,nombre, usuario=null})=>{
             >
               {usuario ? (
               <>
-              <img src= {usuario.picture} className='h-7 w-7 mr-2 rounded-full' alt='Es una imagen de perfil'/>
+              <img src= {usuario.picture} className='h-3 w-3  rounded-full' alt=''/>
               {usuario.name}
               </>
               ) :(

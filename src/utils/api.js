@@ -51,6 +51,17 @@ export const eliminarUsuarios = async (id,successCallback,errorCallback)=>{
     await axios.request(options).then(successCallback).catch(errorCallback);
 }
 
+export const obtenerDatosUsuario= async(successCallback,errorCallback)=>{
+    const options ={
+        method: 'GET', 
+        url: 'http://localhost:5000/usuarios/self',
+        headers:{
+            Authorization:getToken(), //enviarle el token a auth0
+        }
+    };
+    await axios.request(options).then(successCallback).catch(errorCallback)
+}
+
 ///////////////////////////----------------------------------------------
 
 export const obtenerProductos = async(successCallback,errorCallback)=>{
