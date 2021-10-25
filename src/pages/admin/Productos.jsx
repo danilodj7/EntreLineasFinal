@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { Dialog,Tooltip } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css';
 import { obtenerProductos,crearProductos,editarProductos,eliminarProductos } from 'utils/api';
+import PrivateComponent from 'components/PrivateComponent';
 
 
 
@@ -110,7 +111,9 @@ const TablaProductos =({ listaProductos,setEjecutarConsulta })=>{
                    <th className='md:p-2'>Fabricante</th>
                    <th className='md:p-2'>Producto</th>
                    <th className='md:p-2'>Garantia</th>
+                   <PrivateComponent roleList={['admin']}>
                    <th className='md:p-2'>Acciones</th>
+                   </PrivateComponent>
                </tr>
             </thead>
             <tbody className='text-gray-900 font-medium'>
@@ -226,8 +229,9 @@ const FilaProducto =({productos,setEjecutarConsulta})=>{
     <td className='md:p-1'>{productos.nameProduct}</td>
     <td className='md:p-1'>{productos.warranty}</td>
     </>
-        ) }
-    <td>
+        )}
+        <PrivateComponent roleList={['admin']}> 
+        <td>      
         <div className='flex w-full justify-around '>
             {edit ?(
                 <>
@@ -257,6 +261,9 @@ const FilaProducto =({productos,setEjecutarConsulta})=>{
             </>
             )}      
         </div>
+       
+        
+        
         <Dialog open={openDialog}>
         <div className='p-8 flex flex-col'>
         <h1 className='text-gray-900 text-2xl font-bold'>
@@ -279,6 +286,7 @@ const FilaProducto =({productos,setEjecutarConsulta})=>{
         </div>
         </Dialog>
     </td>
+        </PrivateComponent>
 </tr>
     )
 }
