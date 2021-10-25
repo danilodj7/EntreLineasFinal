@@ -15,9 +15,11 @@ import 'styles/styles.css'
 import {DarkModeContext } from 'context/darkMode'
 import { useEffect, useState } from 'react/cjs/react.development';
 import { Auth0Provider } from "@auth0/auth0-react";
+import { UserContext } from 'context/userContext';
 
 function App() {
   const [darkMode,setDarkMode] =useState(false)
+  const [usuarios,setUsuarios]=useState({})
   useEffect(()=>{
     console.log('Modo dark',darkMode)
   },[darkMode])
@@ -29,6 +31,7 @@ function App() {
     audience="api-autenticacion-productos-carros"
     >
     <div className='App'>
+      <UserContext.Provider value={{usuarios,setUsuarios}}>
       <DarkModeContext.Provider value={{darkMode,setDarkMode}}> 
       <Router>  
      
@@ -88,7 +91,7 @@ function App() {
      </Switch>
     </Router>
       </DarkModeContext.Provider>
-    
+      </UserContext.Provider>
     </div>
     </Auth0Provider>
   );

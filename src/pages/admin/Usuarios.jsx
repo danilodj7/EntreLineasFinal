@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { Dialog,Tooltip } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css';
 import { obtenerUsuarios,crearUsuarios,editarUsuarios,eliminarUsuarios } from 'utils/api';
+import PrivateComponent from 'components/PrivateComponent';
 
 const Usuarios = () => {
     const [mostrarTabla,setMostrarTabla] = useState(true)
@@ -93,7 +94,9 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
         placeholder='Buscar' className='border border-gray-400 mt-3 px-2 py-1 self-start rounded-md focus:outline-none focus:border-indigo-600 ' />
         
         <h2 className='text-gray-900 text-center md:py-5 font-extrabold'>Tabla de Usuarios</h2>
-
+        <PrivateComponent roleList={['admin','vendedor']}>
+        <button className='bg-red-500'>Hola RBAC</button>
+        </PrivateComponent >
         
         <table className='tabla hidden md:block'>
             <thead>
