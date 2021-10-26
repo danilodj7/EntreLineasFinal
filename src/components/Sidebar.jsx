@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import ImagenLogo from './ImagenLogo'
 import { useAuth0 } from "@auth0/auth0-react";
+import PrivateRouter from './PrivateRouter';
 
 
 
@@ -19,11 +20,15 @@ const Sidebar = () => {
             <Link to='/admin'>
             <ImagenLogo/>
             </Link>
-          
+        
           <Ruta ruta='/admin/perfil' nombre='Perfil' usuario={user} />
+          
           <Ruta ruta='/admin/productos' nombre='Productos'/>
+         
           <Ruta ruta='/admin/ventas' nombre='Ventas' />
+          
           <Ruta ruta='/admin/usuarios' nombre='Usuarios'/>
+          
           <Ruta ruta='/admin/clientes' nombre='Clientes'/>
        
           <div className='mt-52'>
@@ -46,7 +51,7 @@ const Ruta =({icono,ruta,nombre, usuario=null})=>{
             >
               {usuario ? (
               <>
-              <img src= {usuario.picture} className='h-3 w-3  rounded-full' alt=''/>
+              <img src= {usuario.picture} className='h-5 w-5 mr-1 rounded-full' alt=''/>
               {usuario.name}
               </>
               ) :(

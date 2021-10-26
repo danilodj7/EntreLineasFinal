@@ -16,6 +16,7 @@ const Ventas = () => {
      const [productosTabla, setProductosTabla]  =useState([])
 
      useEffect(() => {
+       //pide los productos a la base de datos
           const fetchVendores = async () => {
             await obtenerUsuarios(
               (response) => {
@@ -40,7 +41,7 @@ const Ventas = () => {
           fetchVendores();
           fetchProductos();
         }, []);
-     
+     //en el submitform queda guardado ta bla de productos la informacion
         const submitForm = async (e) => {
                e.preventDefault();
                const fd = new FormData(form.current);
@@ -195,7 +196,7 @@ const TablaProductos =({productos, setProductos, setProductosTabla})=>{
                <th>Fabricante</th>
                <th>Nombre</th>
                <th>Garantia</th>
-               <th>Cantidad</th>
+              
               
                <th>Eliminar</th>
                    <th className='hidden'>Input</th>
@@ -230,28 +231,8 @@ const FilaProducto = ({ veh, index, eliminarProducto, modificarProducto }) => {
          <td>{producto.company}</td>
          <td>{producto.nameProduct}</td>
          <td>{producto.warranty}</td>
-         <td>
-           <label htmlFor={`valor_${index}`}>
-             <input
-               className ='text-gray-700 text-center'
-               type='number'
-               name={`cantidad_${index}`}
-               value={producto.cantidad}
-               onChange={(e) => {
-                 modificarProducto(producto, e.target.value === '' ? '0' : e.target.value);
-                 setProducto({
-                    ...producto,
-                    cantidad: e.target.value === '' ? '0' : e.target.value,
-                    total:
-                          parseFloat(producto.valor) *  parseFloat(e.target.value === '' ? '0' : e.target.value),
-                 });
-          }}
-             />
-             
-           </label>
-         </td>
-     
-       
+         
+         
          <td>
            <i
              onClick={() => eliminarProducto(producto)}

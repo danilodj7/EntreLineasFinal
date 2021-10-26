@@ -106,6 +106,8 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
                    <th className='md:p-2'>Email</th>
                    <th className='md:p-2'>Roles</th>
                    <th className='md:p-2'>Acciones</th>
+                   <th className='md:p-2'>Estados</th>
+
                </tr>
             </thead>
             <tbody className='text-gray-900 font-medium'>
@@ -221,6 +223,7 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
         <td>
            <RolesUsuario usuarios ={usuarios}/>
         </td>
+        <td><EstadoUsuarios usuarios={usuarios}/></td>
         </>
             ) }
         <td>
@@ -296,9 +299,10 @@ const TablaUsuarios =({listaUsuarios,setEjecutarConsulta })=>{
 
         return(
             <select value={rol} onChange={(e)=> setRol(e.target.value)} >
+                <option value ='' disabled> Seleccione un rol</option>
                 <option value="admin">Admin</option>
                 <option value="vendedor">Vendedor</option>
-                <option value="inactivo">Inactivo</option>
+                <option value="sin rol">Sin rol</option>
             </select>
             
         )
@@ -369,5 +373,28 @@ const FormularioCreacionUsuarios =({setMostrarTabla,listaUsuarios,setUsuarios})=
     )
 }
 
+const EstadoUsuarios =({usuarios})=>{
+    const [estado, setEstado] = useState(usuarios.estado ?? '');
+    useEffect(() => {
+       const editUsuariosRol =async()=>{
+            await editarUsuarios (usuarios._id,{estado},
+                (res)=>{console.log(res)},
+                (err)=>{console.error(err)}
+                )
+       }
+       if (usuarios.estado !== estado) {
+        editUsuariosRol();
+       }
+
+    }, [estado,usuarios])
+
+    return<select value={estado} onChange={e=>setEstado(e.target.value)}> 
+        <option value="" disabled>Seleccione</option>
+        <option value="autorizado" className='text-green-600'>Autorizado</option>
+        <option value="pendiente" className='text-yellow-500'>Pendiente</option>
+        <option value="rechazado" className='text-red-800'>Rechazado</option>
+    </select>
+    
+}
 
 export default Usuarios
