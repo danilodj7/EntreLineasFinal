@@ -191,7 +191,7 @@ const TablaProductos =({productos, setProductos, setProductosTabla})=>{
             </div>
             <table className='tabla mt-4 text-gray-100 text-base '>
               <thead  >
-               <tr classsName='text-gray-100'>
+               <tr className='text-gray-100'>
                <th>Id</th>
                <th>Fabricante</th>
                <th>Nombre</th>

@@ -109,6 +109,18 @@ export const eliminarProductos = async (id,successCallback,errorCallback)=>{
 }
 
 
+export const obtenerDatosProducto= async(successCallback,errorCallback)=>{
+    const options ={
+        method: 'GET', 
+        url: 'http://localhost:5000/productos/self',
+        headers:{
+            Authorization:getToken(), //enviarle el token a auth0
+        }
+    };
+    await axios.request(options).then(successCallback).catch(errorCallback)
+}
+
+
 //////////////////////////////////////////////////////-----------------
 
 export const crearVenta = async(data, successCallback,errorCallback)=>{

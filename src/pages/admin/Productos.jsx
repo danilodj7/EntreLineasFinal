@@ -22,7 +22,7 @@ const Productos = () => {
                 (response)=>{
                     setProductos(response.data)
                     setEjecutarConsulta(false) 
-                  
+                
                 },
                 (error)=>{
                     console.log(error)
