@@ -1,7 +1,6 @@
 import useActiveRoute from 'hooks/useActiveRoute'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import ImagenLogo from './ImagenLogo'
 import { useAuth0 } from "@auth0/auth0-react";
 import PrivateRouter from './PrivateRouter';
 
@@ -17,9 +16,7 @@ const Sidebar = () => {
     }
     return (
         <div className=' hidden md:flex md:w-72 flex-col  bg-gray-800 p-3  text-gray-100 text-center'>
-            <Link to='/admin'>
-            <ImagenLogo/>
-            </Link>
+           
         
           <Ruta ruta='/admin/perfil' nombre='Perfil' usuario={user} />
           
