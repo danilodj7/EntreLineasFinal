@@ -21,9 +21,7 @@ import PrivateRouter from 'components/PrivateRouter';
 function App() {
   
   const [usuarios,setUsuarios]=useState({})
-  useEffect(()=>{
-    console.log('Modo dark',darkMode)
-  },[darkMode])
+  
   return (
     <Auth0Provider
     domain="ventas-productoscar.us.auth0.com"
