@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-import TriggerDarkMode from './TriggerDarkMode'
+
 import { useAuth0 } from "@auth0/auth0-react";
 
 const NavBar = () => {
@@ -12,7 +12,7 @@ const NavBar = () => {
                 <li>logo</li>
                 <li>Productos</li>
                 <li>Quienes Somos</li>
-                <TriggerDarkMode/>
+              
                
                 <li  >
                     <button 

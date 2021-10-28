@@ -12,14 +12,14 @@ import Login from 'pages/Login';
 import Regristro from 'pages/Regristro';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css'
-import {DarkModeContext } from 'context/darkMode'
+
 import { useEffect, useState } from 'react/cjs/react.development';
 import { Auth0Provider } from "@auth0/auth0-react";
 import { UserContext } from 'context/userContext';
 import PrivateRouter from 'components/PrivateRouter';
 
 function App() {
-  const [darkMode,setDarkMode] =useState(false)
+  
   const [usuarios,setUsuarios]=useState({})
   useEffect(()=>{
     console.log('Modo dark',darkMode)
@@ -33,7 +33,7 @@ function App() {
     >
     <div className='App'>
       <UserContext.Provider value={{usuarios,setUsuarios}}>
-      <DarkModeContext.Provider value={{darkMode,setDarkMode}}> 
+      
       <Router>  
      
      <Switch> 
@@ -98,7 +98,6 @@ function App() {
        </Route>
      </Switch>
     </Router>
-      </DarkModeContext.Provider>
       </UserContext.Provider>
     </div>
     </Auth0Provider>
